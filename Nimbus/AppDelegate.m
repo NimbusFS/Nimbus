@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "NimbusFUSEFileSystem.h"
+#import "temp.h"
+#import <OSXFUSE/OSXFUSE.h>
 
 @implementation AppDelegate
 
@@ -26,6 +29,26 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:USERNAME andPassword:PASSWORD atMountPath:@"/Volumes/Nimbus"];
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(didMount:)
+                   name:kGMUserFileSystemDidMount object:nil];
+    [center addObserver:self selector:@selector(didUnmount:)
+                   name:kGMUserFileSystemDidUnmount object:nil];
+    
+}
+
+- (void)didMount:(NSNotification *)notification {
+    NSDictionary* userInfo = [notification userInfo];
+    NSString* mountPath = [userInfo objectForKey:kGMUserFileSystemMountPathKey];
+    NSString* parentPath = [mountPath stringByDeletingLastPathComponent];
+    [[NSWorkspace sharedWorkspace] selectFile:mountPath
+                     inFileViewerRootedAtPath:parentPath];
+}
+
+- (void)didUnmount:(NSNotification*)notification {
+    [[NSApplication sharedApplication] terminate:nil];
 }
 
 /**
@@ -155,6 +178,7 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
     // Save changes in the application's managed object context before the application terminates.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     if (!__managedObjectContext) {
         return NSTerminateNow;

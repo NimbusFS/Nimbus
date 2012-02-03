@@ -7,8 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NimbusFUSEFileSystem.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
+{
+    NimbusFUSEFileSystem *nimbusFS;
+}
 
 @property (assign) IBOutlet NSWindow *window;
 

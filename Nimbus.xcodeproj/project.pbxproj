@@ -1,0 +1,310 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1B7F4AEB14DB61A5002D1B93 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */; };
+		1B7F4AF514DB61A5002D1B93 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4AF314DB61A5002D1B93 /* InfoPlist.strings */; };
+		1B7F4AF714DB61A5002D1B93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4AF614DB61A5002D1B93 /* main.m */; };
+		1B7F4AFB14DB61A5002D1B93 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4AF914DB61A5002D1B93 /* Credits.rtf */; };
+		1B7F4AFE14DB61A5002D1B93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */; };
+		1B7F4B0114DB61A6002D1B93 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4AFF14DB61A6002D1B93 /* MainMenu.xib */; };
+		1B7F4B0414DB61A6002D1B93 /* Nimbus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4B0214DB61A6002D1B93 /* Nimbus.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1B7F4AE614DB61A5002D1B93 /* Nimbus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nimbus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		1B7F4AED14DB61A5002D1B93 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		1B7F4AEE14DB61A5002D1B93 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1B7F4AEF14DB61A5002D1B93 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1B7F4AF214DB61A5002D1B93 /* Nimbus-Info.plist */ = {isa = PBXFileReference; path = "Nimbus-Info.plist"; sourceTree = "<group>"; };
+		1B7F4AF414DB61A5002D1B93 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1B7F4AF614DB61A5002D1B93 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1B7F4AF814DB61A5002D1B93 /* Nimbus-Prefix.pch */ = {isa = PBXFileReference; path = "Nimbus-Prefix.pch"; sourceTree = "<group>"; };
+		1B7F4AFA14DB61A5002D1B93 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		1B7F4AFC14DB61A5002D1B93 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1B7F4B0014DB61A6002D1B93 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1B7F4B0314DB61A6002D1B93 /* Nimbus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nimbus.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1B7F4AE314DB61A5002D1B93 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B7F4AEB14DB61A5002D1B93 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B7F4ADB14DB61A5002D1B93 = {
+			isa = PBXGroup;
+			children = (
+				1B7F4AF014DB61A5002D1B93 /* Nimbus */,
+				1B7F4AE914DB61A5002D1B93 /* Frameworks */,
+				1B7F4AE714DB61A5002D1B93 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1B7F4AE714DB61A5002D1B93 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1B7F4AE614DB61A5002D1B93 /* Nimbus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1B7F4AE914DB61A5002D1B93 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */,
+				1B7F4AEC14DB61A5002D1B93 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1B7F4AEC14DB61A5002D1B93 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1B7F4AED14DB61A5002D1B93 /* AppKit.framework */,
+				1B7F4AEE14DB61A5002D1B93 /* CoreData.framework */,
+				1B7F4AEF14DB61A5002D1B93 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		1B7F4AF014DB61A5002D1B93 /* Nimbus */ = {
+			isa = PBXGroup;
+			children = (
+				1B7F4AFC14DB61A5002D1B93 /* AppDelegate.h */,
+				1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */,
+				1B7F4AFF14DB61A6002D1B93 /* MainMenu.xib */,
+				1B7F4B0214DB61A6002D1B93 /* Nimbus.xcdatamodeld */,
+				1B7F4AF114DB61A5002D1B93 /* Supporting Files */,
+			);
+			path = Nimbus;
+			sourceTree = "<group>";
+		};
+		1B7F4AF114DB61A5002D1B93 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1B7F4AF214DB61A5002D1B93 /* Nimbus-Info.plist */,
+				1B7F4AF314DB61A5002D1B93 /* InfoPlist.strings */,
+				1B7F4AF614DB61A5002D1B93 /* main.m */,
+				1B7F4AF814DB61A5002D1B93 /* Nimbus-Prefix.pch */,
+				1B7F4AF914DB61A5002D1B93 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1B7F4AE514DB61A5002D1B93 /* Nimbus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B7F4B0714DB61A6002D1B93 /* Build configuration list for PBXNativeTarget "Nimbus" */;
+			buildPhases = (
+				1B7F4AE214DB61A5002D1B93 /* Sources */,
+				1B7F4AE314DB61A5002D1B93 /* Frameworks */,
+				1B7F4AE414DB61A5002D1B93 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Nimbus;
+			productName = Nimbus;
+			productReference = 1B7F4AE614DB61A5002D1B93 /* Nimbus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1B7F4ADD14DB61A5002D1B93 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 1B7F4AE014DB61A5002D1B93 /* Build configuration list for PBXProject "Nimbus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1B7F4ADB14DB61A5002D1B93;
+			productRefGroup = 1B7F4AE714DB61A5002D1B93 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1B7F4AE514DB61A5002D1B93 /* Nimbus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1B7F4AE414DB61A5002D1B93 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B7F4AF514DB61A5002D1B93 /* InfoPlist.strings in Resources */,
+				1B7F4AFB14DB61A5002D1B93 /* Credits.rtf in Resources */,
+				1B7F4B0114DB61A6002D1B93 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1B7F4AE214DB61A5002D1B93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B7F4AF714DB61A5002D1B93 /* main.m in Sources */,
+				1B7F4AFE14DB61A5002D1B93 /* AppDelegate.m in Sources */,
+				1B7F4B0414DB61A6002D1B93 /* Nimbus.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1B7F4AF314DB61A5002D1B93 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1B7F4AF414DB61A5002D1B93 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1B7F4AF914DB61A5002D1B93 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1B7F4AFA14DB61A5002D1B93 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		1B7F4AFF14DB61A6002D1B93 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1B7F4B0014DB61A6002D1B93 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1B7F4B0514DB61A6002D1B93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1B7F4B0614DB61A6002D1B93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1B7F4B0814DB61A6002D1B93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Nimbus/Nimbus-Prefix.pch";
+				INFOPLIST_FILE = "Nimbus/Nimbus-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		1B7F4B0914DB61A6002D1B93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Nimbus/Nimbus-Prefix.pch";
+				INFOPLIST_FILE = "Nimbus/Nimbus-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1B7F4AE014DB61A5002D1B93 /* Build configuration list for PBXProject "Nimbus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B7F4B0514DB61A6002D1B93 /* Debug */,
+				1B7F4B0614DB61A6002D1B93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1B7F4B0714DB61A6002D1B93 /* Build configuration list for PBXNativeTarget "Nimbus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B7F4B0814DB61A6002D1B93 /* Debug */,
+				1B7F4B0914DB61A6002D1B93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1B7F4B0214DB61A6002D1B93 /* Nimbus.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1B7F4B0314DB61A6002D1B93 /* Nimbus.xcdatamodel */,
+			);
+			currentVersion = 1B7F4B0314DB61A6002D1B93 /* Nimbus.xcdatamodel */;
+			path = Nimbus.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 1B7F4ADD14DB61A5002D1B93 /* Project object */;
+}

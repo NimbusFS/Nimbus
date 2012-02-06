@@ -14,17 +14,17 @@
 @interface NimbusFUSEFileSystem: NSObject <CLAPIEngineDelegate> 
 {
     GMUserFileSystem* fs_;
-    CLAPIEngine *engine_;
+    CLAPIEngine* engine_;
     
     NSMutableDictionary* cloudFiles;
-    BOOL hasMorePages;
-    BOOL isDoneDownloading;
-    NSInteger lastPageRetrieved;
+    NSString* cachePath;
 }
 
 // special constructor
 - (NimbusFUSEFileSystem *) initWithUsername:(NSString *)username andPassword:(NSString *)password atMountPath:(NSString *)mountPath;
+- (void) getNextPage;
 
 @property (retain, nonatomic) NSMutableDictionary* cloudFiles;
+@property (retain, nonatomic) NSString* cachePath;
 
 @end

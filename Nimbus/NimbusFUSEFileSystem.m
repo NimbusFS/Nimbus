@@ -7,18 +7,22 @@
 //
 
 #import "NimbusFUSEFileSystem.h"
+#import "NimbusFile.h"
 #import "Cloud.h"
 #import <OSXFUSE/OSXFUSE.h>
 
 @implementation NimbusFUSEFileSystem
 @synthesize cloudFiles;
+@synthesize cachePath;
+
+BOOL hasMorePages = YES;
+NSInteger whichPage = 1;
 
 - (NimbusFUSEFileSystem *) initWithUsername:(NSString *)username andPassword:(NSString *)password atMountPath:(NSString *)mountPath
 {
     self = [super init];
     if (!self) return nil;
     
-    // blah
     engine_ = [CLAPIEngine engineWithDelegate:self];
 	engine_.email = username;
 	engine_.password = password;
@@ -32,11 +36,20 @@
                         [[NSBundle mainBundle] pathForResource:@"Fuse" ofType:@"icns"]]];
     [fs_ mountAtPath:mountPath withOptions:options];
     
-    self.cloudFiles = [[NSMutableDictionary alloc] init];
-    
-    [engine_ getItemListStartingAtPage:40 itemsPerPage:10 userInfo:nil];
+    cloudFiles = [[NSMutableDictionary alloc] init];
+    cachePath = @"/Users/sagar/Library/Application Support/Nimbus/Cache/";
+    [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:YES attributes:nil error:nil];
+   
+    //[engine_ getItemListStartingAtPage:1 itemsPerPage:10 userInfo:nil];
+    [self getNextPage];
     
     return self;
+}
+
+- (void) getNextPage
+{
+    NSLog(@"Getting page %ld", whichPage);
+    [engine_ getItemListStartingAtPage:whichPage itemsPerPage:10 userInfo:nil];
 }
 
 - (void) dealloc
@@ -57,8 +70,19 @@
     if ( [cloudFiles objectForKey:[path lastPathComponent]] == nil )
         return nil;
     
-    return [cloudFiles objectForKey:[path lastPathComponent]];
-    //return [[NSData alloc] initWithContentsOfURL:[cloudFiles objectForKey:[path lastPathComponent]]];
+    // return the data from the cache
+    // basically get the filename, lookup its cache path, open that file, and return its data
+    NimbusFile *theFile = [cloudFiles objectForKey:[path lastPathComponent]];
+    if ([theFile isCachedToDisk])
+    {
+        [theFile cacheToMemory];
+        return [theFile data];
+    }
+    else
+    {
+        NSLog(@"File wasn't cached! (%@)", path);
+        return nil;
+    }
 }
 
 #pragma CLAPI callbacks
@@ -69,15 +93,27 @@
 - (void)itemListRetrievalSucceeded:(NSArray *)items connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
     if ( [items count] == 0 )
+    {
+        hasMorePages = NO;
         return;
+    }
     
-	NSLog(@"[ITEM LIST]: %@, %@", connectionIdentifier, items);
+    if ( [items count] < 10 )
+        hasMorePages = NO;
+    
+    // get the data from these pages
+    NSLog(@"[ITEM LIST]: %@, %@", connectionIdentifier, items);
     for (CLWebItem *item in items)
     {
         NSLog(@"inserting into dictionary: %@", [item name]);
-        //[cloudFiles setObject:[item thumb] forKey:[item name]];
-        [cloudFiles setObject:[[NSData alloc] initWithContentsOfURL:[item remoteURL]] forKey:[item name]];
+        NimbusFile *theFile = [[NimbusFile alloc] initWithWebItem:item andCachePath:cachePath];
+        [theFile download];
+        [cloudFiles setObject:theFile forKey:[item name]];
     }
+    whichPage++;
+    
+    if ( hasMorePages )
+        [self getNextPage];
 }
 
 @end

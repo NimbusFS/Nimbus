@@ -19,6 +19,7 @@
 		1B7F4B1F14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */; };
 		1B7F4B2214DB706A002D1B93 /* Fuse.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4B2014DB706A002D1B93 /* Fuse.icns */; };
 		1B7F4B2314DB706A002D1B93 /* hellodoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4B2114DB706A002D1B93 /* hellodoc.icns */; };
+		1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,8 @@
 		1B7F4B2014DB706A002D1B93 /* Fuse.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Fuse.icns; path = ../Fuse.icns; sourceTree = "<group>"; };
 		1B7F4B2114DB706A002D1B93 /* hellodoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = hellodoc.icns; path = ../hellodoc.icns; sourceTree = "<group>"; };
 		1B9521E214DBDAEB0068D44A /* temp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temp.h; sourceTree = "<group>"; };
+		1BC9A27314DFBA2B00A7B9FE /* NimbusFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusFile.h; sourceTree = "<group>"; };
+		1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NimbusFile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +105,11 @@
 				1B7F4B2414DB7083002D1B93 /* Resources */,
 				1B7F4B1D14DB6EB1002D1B93 /* NimbusFUSEFileSystem.h */,
 				1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */,
+				1BC9A27314DFBA2B00A7B9FE /* NimbusFile.h */,
+				1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */,
 				1B7F4AFC14DB61A5002D1B93 /* AppDelegate.h */,
-				1B9521E214DBDAEB0068D44A /* temp.h */,
 				1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */,
+				1B9521E214DBDAEB0068D44A /* temp.h */,
 				1B7F4AFF14DB61A6002D1B93 /* MainMenu.xib */,
 				1B7F4B0214DB61A6002D1B93 /* Nimbus.xcdatamodeld */,
 				1B7F4AF114DB61A5002D1B93 /* Supporting Files */,
@@ -203,6 +208,7 @@
 				1B7F4AFE14DB61A5002D1B93 /* AppDelegate.m in Sources */,
 				1B7F4B0414DB61A6002D1B93 /* Nimbus.xcdatamodeld in Sources */,
 				1B7F4B1F14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m in Sources */,
+				1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

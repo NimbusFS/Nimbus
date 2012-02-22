@@ -11,6 +11,7 @@
 @implementation NimbusFile
 
 @synthesize itsCLWebItem;
+@synthesize itsDiskPath;
 @synthesize itsCachePath;
 @synthesize isCachedToDisk;
 @synthesize isCachedInMemory;
@@ -22,39 +23,75 @@
     if (!self) return nil;
     
     itsCLWebItem = [webItem retain];
-    itsCachePath = [[NSString alloc] initWithFormat:@"%@/%@", path, [[webItem name] lastPathComponent]];
+    itsCachePath = [path retain];
+    itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", path, [[webItem name] lastPathComponent]];
     isCachedToDisk = NO;
     isCachedInMemory = NO;
     return self;
 }
 
+#pragma Caching
 - (void) cacheToMemory
 {
     if ( !isCachedInMemory )
     {
-        data = [[NSData alloc] initWithContentsOfFile:itsCachePath];
+        data = [[NSData alloc] initWithContentsOfFile:itsDiskPath];
         isCachedInMemory = YES;
     }
 }
 
 - (void) deleteFromMemory
 {
+    if (!isCachedInMemory)
+        return;
+    
     [data release];
-    [data dealloc];
     data = nil;
     isCachedInMemory = NO;
 }
 
+- (void) deleteFromDisk
+{
+    if (!isCachedToDisk)
+        return;
+
+    NSFileManager *filemgr;
+    
+    filemgr = [NSFileManager defaultManager];
+    
+    if ([filemgr removeItemAtPath:itsDiskPath error: NULL]  == YES)
+    {
+        NSLog (@"Remove successful");
+        isCachedToDisk = NO;
+    }
+}
+
+- (void) renameInCache:(NSString *)newname
+{
+    NSFileManager *filemgr;
+    
+    filemgr = [NSFileManager defaultManager];
+    
+    NSString *newpath = [itsCachePath stringByAppendingPathComponent:newname];
+    
+    if ([filemgr moveItemAtPath:itsDiskPath toPath:newpath error: NULL]  == YES)
+    {
+        NSLog (@"Move successful");
+        itsDiskPath = [newpath retain];
+    }
+}
+
+#pragma Downloading
 - (void) download
 {
     // blah
     // download from the URL at clWebItem.remoteURL
     // and save it to path/clWebItem.name
-    itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsCachePath];
+    itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
     if (itsFileHandle == nil)
     {
-        [[NSFileManager defaultManager] createFileAtPath:itsCachePath contents:nil attributes:nil];
-        itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsCachePath];
+        [[NSFileManager defaultManager] createFileAtPath:itsDiskPath contents:nil attributes:nil];
+        itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
         
         [itsFileHandle retain];
         currentOffset = 0ULL;
@@ -93,9 +130,6 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    // do something with the data
-    NSLog(@"Succeeded!");
-    
     // release the connection
     [connection release];
     
@@ -117,12 +151,13 @@
 
 - (void) dealloc
 {
+    [self deleteFromDisk];
     [self deleteFromMemory];
     
     [itsCLWebItem release];
     
-    [itsCachePath release];
-    itsCachePath = nil;
+    [itsDiskPath release];
+    itsDiskPath = nil;
     
     [itsFileHandle closeFile];
     [itsFileHandle release];

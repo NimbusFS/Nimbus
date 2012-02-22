@@ -12,7 +12,8 @@
 @interface NimbusFile : NSObject <NSURLDownloadDelegate>
 {
     CLWebItem *itsCLWebItem;
-    NSString *itsCachePath;
+    NSString *itsDiskPath; // path to this file on disk
+    NSString *itsCachePath; // path to the directory where this file will live on disk
     NSData* data;
     BOOL isCachedToDisk;
     BOOL isCachedInMemory;
@@ -23,6 +24,7 @@
 }
 
 @property (retain, nonatomic) CLWebItem *itsCLWebItem;
+@property (retain, nonatomic) NSString *itsDiskPath;
 @property (retain, nonatomic) NSString *itsCachePath;
 @property (retain, nonatomic) NSData* data;
 @property (nonatomic) BOOL isCachedToDisk;
@@ -32,5 +34,7 @@
 - (void) download;
 - (void) cacheToMemory;
 - (void) deleteFromMemory;
+- (void) deleteFromDisk;
+- (void) renameInCache:(NSString *)newname;
 
 @end

@@ -26,5 +26,6 @@
 
 @property (retain, nonatomic) NSMutableDictionary* cloudFiles;
 @property (retain, nonatomic) NSString* cachePath;
+@property (retain, nonatomic) CLAPIEngine *engine_;
 
 @end

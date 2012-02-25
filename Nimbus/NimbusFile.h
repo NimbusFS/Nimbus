@@ -33,8 +33,8 @@
 - (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path;
 - (void) download;
 - (void) cacheToMemory;
+- (void) renameInCache:(NSString *)newname;
 - (void) deleteFromMemory;
 - (void) deleteFromDisk;
-- (void) renameInCache:(NSString *)newname;
 
 @end

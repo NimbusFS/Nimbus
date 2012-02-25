@@ -59,11 +59,8 @@
     
     filemgr = [NSFileManager defaultManager];
     
-    if ([filemgr removeItemAtPath:itsDiskPath error: NULL]  == YES)
-    {
-        NSLog (@"Remove successful");
+    if ([filemgr removeItemAtPath:itsDiskPath error:nil]  == YES)
         isCachedToDisk = NO;
-    }
 }
 
 - (void) renameInCache:(NSString *)newname
@@ -73,18 +70,15 @@
     filemgr = [NSFileManager defaultManager];
     
     NSString *newpath = [itsCachePath stringByAppendingPathComponent:newname];
+    NSError *error = nil;
     
-    if ([filemgr moveItemAtPath:itsDiskPath toPath:newpath error: NULL]  == YES)
-    {
-        NSLog (@"Move successful");
+    if ([filemgr moveItemAtPath:itsDiskPath toPath:newpath error:&error]  == YES)
         itsDiskPath = [newpath retain];
-    }
 }
 
 #pragma Downloading
 - (void) download
 {
-    // blah
     // download from the URL at clWebItem.remoteURL
     // and save it to path/clWebItem.name
     itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
@@ -151,17 +145,11 @@
 
 - (void) dealloc
 {
-    [self deleteFromDisk];
     [self deleteFromMemory];
+    [self deleteFromDisk];
     
     [itsCLWebItem release];
-    
     [itsDiskPath release];
-    itsDiskPath = nil;
-    
-    [itsFileHandle closeFile];
-    [itsFileHandle release];
-    itsFileHandle = nil;
     
     [super dealloc];
 }

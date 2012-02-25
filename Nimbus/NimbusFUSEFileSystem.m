@@ -35,13 +35,15 @@ NSInteger whichPage = 1;
     //[options addObject:@"rdwr"];
     [options addObject:@"volname=NimbusFS"];
     [options addObject:[NSString stringWithFormat:@"volicon=%@", 
-                        [[NSBundle mainBundle] pathForResource:@"Fuse" ofType:@"icns"]]];
+                        [[NSBundle mainBundle] pathForResource:@"Nimbus" ofType:@"icns"]]];
     [fs_ mountAtPath:mountPath withOptions:options];
     
     cloudFiles = [[NSMutableDictionary alloc] init];
     cachePath = @"/Users/sagar/Library/Application Support/Nimbus/Cache/";
     [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:YES attributes:nil error:nil];
    
+    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshFiles) userInfo:nil repeats:YES];
+    
     [self getNextPage];
     
     return self;
@@ -51,6 +53,19 @@ NSInteger whichPage = 1;
 {
     //NSLog(@"Getting page %ld", whichPage);
     [engine_ getItemListStartingAtPage:whichPage itemsPerPage:10 userInfo:nil];
+}
+
+-(void) refreshFiles
+{
+    @synchronized(self)
+    {
+        if (hasMorePages)
+            return;
+        
+        hasMorePages = YES;
+        whichPage = 1;
+        [self getNextPage];
+    }
 }
 
 - (void) dealloc
@@ -94,36 +109,34 @@ NSInteger whichPage = 1;
 
 - (BOOL)moveItemAtPath:(NSString *)source toPath:(NSString *)destination error:(NSError **)error
 {
-    NSLog(@"Renaming item: %@ --> %@", source, destination);
-    NSString *newname = [destination lastPathComponent];
-
-    NimbusFile *file = [cloudFiles objectForKey:[source lastPathComponent]];
-    CLWebItem *item = [[file itsCLWebItem] retain];
-
-    if (item == nil)
+    @synchronized(self)
     {
-       NSLog(@"Item is nil");
-       return NO;
+        NSString *newname = [destination lastPathComponent];
+
+        NimbusFile *file = [cloudFiles objectForKey:[source lastPathComponent]];
+        CLWebItem *item = [[file itsCLWebItem] retain];
+
+        if (item == nil)
+        {
+           NSLog(@"Item is nil");
+           return NO;
+        }
+
+        // this is dirty. assume the move was successful :(
+        // steps to rename
+        // 1. rename at cloudapp
+        [engine_ changeNameOfItem:item toName:newname userInfo:nil];
+
+        // 2. remove from the local cache
+        [cloudFiles removeObjectForKey:[source lastPathComponent]];
+        
+        // 3. readd to the cache with a new key
+        [cloudFiles setObject:file forKey:[destination lastPathComponent]];
+        
+        // 4. rename the file in the disk cache
+        [file renameInCache:[destination lastPathComponent]];
+        return YES;
     }
-
-    // this is dirty. assume the move was successful :(
-    // steps to rename
-    // 1. rename at cloudapp
-    NSLog(@"Changing name to %@", newname);
-    NSString *ident = [engine_ changeNameOfItem:item toName:newname userInfo:nil];
-
-    // 2. rename in the disk cache
-    [file renameInCache:newname];
-
-    // 3. rename in the memory cache (associative array of NimbusFile objects)
-    [cloudFiles removeObjectForKey:[source lastPathComponent]];
-    
-    if ([cloudFiles objectForKey:[source lastPathComponent]] != nil)
-        NSLog(@"Deletion failed...");
-    
-    [cloudFiles setObject:file forKey:newname];
-
-    return YES;
 }
 
 - (BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error
@@ -133,8 +146,6 @@ NSInteger whichPage = 1;
         NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
         CLWebItem *item = [file itsCLWebItem];
         
-        NSLog(@"Removing file %@ with href=%@", path, item.href);
-                
         if (file == nil || item == nil)
         {
             NSLog(@"File not found in cache");
@@ -142,23 +153,10 @@ NSInteger whichPage = 1;
         }
 
         [engine_ deleteItem:item userInfo:nil];
-
         [cloudFiles removeObjectForKey:[path lastPathComponent]];
-        
+        [file dealloc];
         return YES;
     }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    NSLog(@"REsponse status: %@", [(NSHTTPURLResponse *)response statusCode]); 
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    // Append the new data to receivedData.
-    // receivedData is an instance variable declared elsewhere.
-    NSLog(@"Data: %@", data);
 }
 
 - (NSDictionary *)attributesOfItemAtPath:(NSString *)path userData:(id)userData error:(NSError **)error
@@ -170,48 +168,59 @@ NSInteger whichPage = 1;
         NSLog(@"Bad path!");
         return nil;
     }
-    int mode = 0700;
-    BOOL isDirectory;
-
-    if ([path isEqualToString:@"/"])
-        isDirectory = YES;
-
-    NSMutableDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
-         [NSNumber numberWithInt:mode], NSFilePosixPermissions,
-         [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
-         [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
-         [NSDate date], NSFileCreationDate,
-         [NSDate date], NSFileModificationDate,
-         (isDirectory ? NSFileTypeDirectory : NSFileTypeRegular), NSFileType,
-         nil];
     
-    if (!attr)
+    @synchronized(self)
     {
-        if (error)
-            *error = [NSError errorWithPOSIXCode:ENOENT];
-        NSLog(@"Attrs not set!");
+        NSDate *creationDate;
+        NSDate *modificationDate;
+        
+        int mode = 0700;
+        BOOL isDirectory = NO;
+        
+        if ([path isEqualToString:@"/"])
+        {
+            isDirectory = YES;
+            creationDate = [NSDate date];
+            modificationDate = [NSDate date];
+        } else {
+            NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
+
+            if (file == nil)
+                return nil;
+            
+            CLWebItem *item = file.itsCLWebItem;
+            creationDate = [item createdAt];
+            modificationDate = [item updatedAt];
+        }
+        
+        NSMutableDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+             [NSNumber numberWithInt:mode], NSFilePosixPermissions,
+             [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
+             [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
+             creationDate, NSFileCreationDate,
+             modificationDate, NSFileModificationDate,
+             (isDirectory ? NSFileTypeDirectory : NSFileTypeRegular), NSFileType,
+             nil];
+        
+        if (!attr)
+        {
+            if (error)
+                *error = [NSError errorWithPOSIXCode:ENOENT];
+            NSLog(@"Attrs not set!");
+        }
+        return attr;
     }
-    return attr;
-}
-
-- (NSDictionary *)finderAttributesAtPath:(NSString *)path error:(NSError **)error
-{
-    return [self resourceAttributesAtPath:path error:error];
-}
-
-- (NSDictionary*)resourceAttributesAtPath:(NSString *)path error:(NSError **)error
-{
-    return nil;
 }
 
 #pragma CLAPI callbacks
 -(void) itemUpdateDidSucceed:(CLWebItem *)resultItem connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
-    NSLog(@"[SUCCESS]: %@", connectionIdentifier);
+    // cool
 }
 
-- (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
-	NSLog(@"[FAIL]: %@, %@", connectionIdentifier, error);
+-(void) itemDeletionDidSucceed:(CLWebItem *)resultItem connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
+{
+    // neato
 }
 
 - (void)itemListRetrievalSucceeded:(NSArray *)items connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
@@ -230,15 +239,23 @@ NSInteger whichPage = 1;
         // get the data from these pages
         for (CLWebItem *item in items)
         {
-            NimbusFile *theFile = [[NimbusFile alloc] initWithWebItem:item andCachePath:cachePath];
-            [theFile download];
-            [cloudFiles setObject:theFile forKey:[item name]];
+            if ([cloudFiles objectForKey:[item name]] == nil)
+            {
+                NimbusFile *theFile = [[NimbusFile alloc] initWithWebItem:item andCachePath:cachePath];
+                [theFile download];
+                [cloudFiles setObject:theFile forKey:[item name]];
+            }
         }
         whichPage++;
         
         if ( hasMorePages )
             [self getNextPage];
     }
+}
+
+- (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+	NSLog(@"[FAIL]: %@, %@", connectionIdentifier, error);
+    [self refreshFiles];
 }
 
 @end

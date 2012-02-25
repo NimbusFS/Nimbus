@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B24960F14EB9B49007F8166 /* NSError+POSIX.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B24960E14EB9B49007F8166 /* NSError+POSIX.m */; };
+		1B42176E14F97E9300E95F2F /* Nimbus.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B42176D14F97E9300E95F2F /* Nimbus.icns */; };
 		1B7F4AEB14DB61A5002D1B93 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */; };
 		1B7F4AF514DB61A5002D1B93 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4AF314DB61A5002D1B93 /* InfoPlist.strings */; };
 		1B7F4AF714DB61A5002D1B93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4AF614DB61A5002D1B93 /* main.m */; };
@@ -18,7 +19,6 @@
 		1B7F4B0B14DB61E8002D1B93 /* OSXFUSE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4B0A14DB61E8002D1B93 /* OSXFUSE.framework */; };
 		1B7F4B1014DB6272002D1B93 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4B0F14DB6272002D1B93 /* libCloud.a */; };
 		1B7F4B1F14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */; };
-		1B7F4B2214DB706A002D1B93 /* Fuse.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4B2014DB706A002D1B93 /* Fuse.icns */; };
 		1B7F4B2314DB706A002D1B93 /* hellodoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4B2114DB706A002D1B93 /* hellodoc.icns */; };
 		1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */; };
 		1BC9A28914DFE81C00A7B9FE /* Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC9A28814DFE81C00A7B9FE /* Cloud.png */; };
@@ -41,6 +41,7 @@
 		1B041F4714DFE9A900816C01 /* CLSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLSocket.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Model/CLSocket.h"; sourceTree = "<group>"; };
 		1B24960D14EB9B49007F8166 /* NSError+POSIX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+POSIX.h"; sourceTree = "<group>"; };
 		1B24960E14EB9B49007F8166 /* NSError+POSIX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+POSIX.m"; sourceTree = "<group>"; };
+		1B42176D14F97E9300E95F2F /* Nimbus.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Nimbus.icns; sourceTree = "<group>"; };
 		1B7F4AE614DB61A5002D1B93 /* Nimbus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nimbus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1B7F4AED14DB61A5002D1B93 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -59,7 +60,6 @@
 		1B7F4B0F14DB6272002D1B93 /* libCloud.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCloud.a; path = "../../../../Library/Developer/Xcode/DerivedData/Nimbus-ddkbencdxnknxlanrbpwpfouqfqs/Build/Products/Debug/libCloud.a"; sourceTree = "<group>"; };
 		1B7F4B1D14DB6EB1002D1B93 /* NimbusFUSEFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusFUSEFileSystem.h; sourceTree = "<group>"; };
 		1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NimbusFUSEFileSystem.m; sourceTree = "<group>"; };
-		1B7F4B2014DB706A002D1B93 /* Fuse.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Fuse.icns; path = ../Fuse.icns; sourceTree = "<group>"; };
 		1B7F4B2114DB706A002D1B93 /* hellodoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = hellodoc.icns; path = ../hellodoc.icns; sourceTree = "<group>"; };
 		1B9521E214DBDAEB0068D44A /* temp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temp.h; sourceTree = "<group>"; };
 		1BC9A27314DFBA2B00A7B9FE /* NimbusFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusFile.h; sourceTree = "<group>"; };
@@ -176,8 +176,8 @@
 		1B7F4B2414DB7083002D1B93 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1B42176D14F97E9300E95F2F /* Nimbus.icns */,
 				1BC9A28814DFE81C00A7B9FE /* Cloud.png */,
-				1B7F4B2014DB706A002D1B93 /* Fuse.icns */,
 				1B7F4B2114DB706A002D1B93 /* hellodoc.icns */,
 			);
 			name = Resources;
@@ -236,9 +236,9 @@
 				1B7F4AF514DB61A5002D1B93 /* InfoPlist.strings in Resources */,
 				1B7F4AFB14DB61A5002D1B93 /* Credits.rtf in Resources */,
 				1B7F4B0114DB61A6002D1B93 /* MainMenu.xib in Resources */,
-				1B7F4B2214DB706A002D1B93 /* Fuse.icns in Resources */,
 				1B7F4B2314DB706A002D1B93 /* hellodoc.icns in Resources */,
 				1BC9A28914DFE81C00A7B9FE /* Cloud.png in Resources */,
+				1B42176E14F97E9300E95F2F /* Nimbus.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

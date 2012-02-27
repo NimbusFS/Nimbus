@@ -44,30 +44,33 @@
 
 -(void) mount:(id)selector
 {
-    [_usernameField setEnabled:NO];
-    [_passwordField setEnabled:NO];
-    [_mountButton setEnabled:NO];
-    [_loginProgressIndicator setHidden:NO];
-
-    // mount the thing
-    nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:@"/Volumes/Nimbus"];
-    
     if (nimbusFS == nil)
-    {
-        [_usernameField setEnabled:YES];
-        [_passwordField setEnabled:YES];
-        [_mountButton setEnabled:YES];
-        [_loginFailedLabel setHidden:NO];
-        [_loginProgressIndicator setHidden:YES];
-    }
-    else
-    {
+    {    
         [_usernameField setEnabled:NO];
         [_passwordField setEnabled:NO];
-        [_mountButton setEnabled:YES];
-        [_mountButton setTitle:@"Unmount"];
-        [_loginFailedLabel setHidden:YES];
-        [_loginProgressIndicator setHidden:YES];
+        [_mountButton setEnabled:NO];
+        [_loginProgressIndicator setHidden:NO];
+
+        // mount the thing
+        nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:@"/Volumes/Nimbus"];
+        
+        if (nimbusFS == nil)
+        {
+            [_usernameField setEnabled:YES];
+            [_passwordField setEnabled:YES];
+            [_mountButton setEnabled:YES];
+            [_loginFailedLabel setHidden:NO];
+            [_loginProgressIndicator setHidden:YES];
+        } else {
+            [_usernameField setEnabled:NO];
+            [_passwordField setEnabled:NO];
+            [_mountButton setEnabled:YES];
+            [_mountButton setTitle:@"Unmount"];
+            [_loginFailedLabel setHidden:YES];
+            [_loginProgressIndicator setHidden:YES];
+        }
+    } else {
+        [nimbusFS unmount];
     }
 }
 

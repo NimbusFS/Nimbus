@@ -61,6 +61,11 @@
         return nil;
 }
 
+- (void) unmount
+{
+    [fs_ unmount];
+}
+
 - (BOOL) login
 {
     // try to get user info

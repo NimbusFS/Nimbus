@@ -28,6 +28,7 @@
 - (NimbusFUSEFileSystem *) initWithUsername:(NSString *)username andPassword:(NSString *)password atMountPath:(NSString *)mountPath;
 - (void) getNextPage;
 - (BOOL) login;
+- (void) unmount;
 
 @property (retain, nonatomic) NSMutableDictionary* cloudFiles;
 @property (retain, nonatomic) NSString* cachePath;

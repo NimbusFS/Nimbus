@@ -8,12 +8,16 @@
 
 #import "AppDelegate.h"
 #import "NimbusFUSEFileSystem.h"
-#import "temp.h"
 #import <OSXFUSE/OSXFUSE.h>
 
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize mountButton = _mountButton;
+@synthesize usernameField = _usernameField;
+@synthesize passwordField = _passwordField;
+@synthesize loginFailedLabel = _loginFailedLabel;
+@synthesize loginProgressIndicator = _loginProgressIndicator;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -28,15 +32,43 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
-    nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:USERNAME andPassword:PASSWORD atMountPath:@"/Volumes/Nimbus"];
-    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(didMount:)
                    name:kGMUserFileSystemDidMount object:nil];
     [center addObserver:self selector:@selector(didUnmount:)
                    name:kGMUserFileSystemDidUnmount object:nil];
     
+    [_loginFailedLabel setHidden:YES];
+    [_loginProgressIndicator setHidden:YES];
+}
+
+-(void) mount:(id)selector
+{
+    [_usernameField setEnabled:NO];
+    [_passwordField setEnabled:NO];
+    [_mountButton setEnabled:NO];
+    [_loginProgressIndicator setHidden:NO];
+
+    // mount the thing
+    nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:@"/Volumes/Nimbus"];
+    
+    if (nimbusFS == nil)
+    {
+        [_usernameField setEnabled:YES];
+        [_passwordField setEnabled:YES];
+        [_mountButton setEnabled:YES];
+        [_loginFailedLabel setHidden:NO];
+        [_loginProgressIndicator setHidden:YES];
+    }
+    else
+    {
+        [_usernameField setEnabled:NO];
+        [_passwordField setEnabled:NO];
+        [_mountButton setEnabled:YES];
+        [_mountButton setTitle:@"Unmount"];
+        [_loginFailedLabel setHidden:YES];
+        [_loginProgressIndicator setHidden:YES];
+    }
 }
 
 - (void)didMount:(NSNotification *)notification {
@@ -48,7 +80,13 @@
 }
 
 - (void)didUnmount:(NSNotification*)notification {
-    [[NSApplication sharedApplication] terminate:nil];
+    //[[NSApplication sharedApplication] terminate:nil];
+    [_usernameField setEnabled:YES];
+    [_passwordField setEnabled:YES];
+    [_mountButton setEnabled:YES];
+    [_mountButton setTitle:@"Mount"];
+    [_loginFailedLabel setHidden:YES];
+    [_loginProgressIndicator setHidden:YES];
 }
 
 /**

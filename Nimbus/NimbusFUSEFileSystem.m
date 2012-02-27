@@ -16,37 +16,65 @@
 @synthesize cloudFiles;
 @synthesize cachePath;
 @synthesize engine_;
+@synthesize whichPage;
+@synthesize hasMorePages;
+@synthesize isLoggedIn;
 
-BOOL hasMorePages = YES;
-NSInteger whichPage = 1;
 
 - (NimbusFUSEFileSystem *) initWithUsername:(NSString *)username andPassword:(NSString *)password atMountPath:(NSString *)mountPath
 {
     self = [super init];
     if (!self) return nil;
     
+    // initialize the Cloud API engine
     self.engine_ = [CLAPIEngine engineWithDelegate:self];
 	engine_.email = username;
 	engine_.password = password;
     
-    fs_ = [[GMUserFileSystem alloc] initWithDelegate:self isThreadSafe:YES];
-    
-    NSMutableArray* options = [NSMutableArray array];
-    //[options addObject:@"rdwr"];
-    [options addObject:@"volname=NimbusFS"];
-    [options addObject:[NSString stringWithFormat:@"volicon=%@", 
-                        [[NSBundle mainBundle] pathForResource:@"Nimbus" ofType:@"icns"]]];
-    [fs_ mountAtPath:mountPath withOptions:options];
-    
+    // initialize the local caches of files in the Cloud Account
     cloudFiles = [[NSMutableDictionary alloc] init];
-    cachePath = @"/Users/sagar/Library/Application Support/Nimbus/Cache/";
+    cachePath = [[NSString alloc] initWithFormat:@"%@/Library/Application Support/Nimbus/Cache.%@", NSHomeDirectory(), username];
     [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:YES attributes:nil error:nil];
    
-    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshFiles) userInfo:nil repeats:YES];
+    isLoggedIn = NO;
+    hasMorePages = YES;
+    whichPage = 1;
     
-    [self getNextPage];
+    if ([self login])
+    {
+        // initialize the FUSE filesystem object
+        fs_ = [[GMUserFileSystem alloc] initWithDelegate:self isThreadSafe:YES];
+        
+        NSMutableArray* options = [NSMutableArray array];
+        //[options addObject:@"rdwr"];
+        [options addObject:@"volname=NimbusFS"];
+        [options addObject:[NSString stringWithFormat:@"volicon=%@", [[NSBundle mainBundle] pathForResource:@"Nimbus" ofType:@"icns"]]];
+        [fs_ mountAtPath:mountPath withOptions:options];
+
+        // refresh the listing every 30 seconds
+        [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshFiles) userInfo:nil repeats:YES];
     
-    return self;
+        [self getNextPage];
+        return self;
+    }
+    else
+        return nil;
+}
+
+- (BOOL) login
+{
+    // try to get user info
+    // wait until it succeeds or fails
+    [engine_ getAccountInformationWithUserInfo:nil];
+    
+    NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:5.0]; // 5 second timeout
+
+    while (!isLoggedIn && [timeoutDate timeIntervalSinceNow] > 0)
+    {
+        NSDate *stopDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+        [[NSRunLoop currentRunLoop] runUntilDate:stopDate];
+    }
+    return isLoggedIn;
 }
 
 - (void) getNextPage
@@ -213,6 +241,11 @@ NSInteger whichPage = 1;
 }
 
 #pragma CLAPI callbacks
+- (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
+{
+    isLoggedIn = YES;
+}
+
 -(void) itemUpdateDidSucceed:(CLWebItem *)resultItem connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
     // cool

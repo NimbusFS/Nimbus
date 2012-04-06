@@ -1,0 +1,40 @@
+header {
+  height: 250px;
+  background: url(../img/header.png) repeat-x; }
+
+#summary {
+  margin-top: 40px;
+  color: white; }
+  #summary h1 {
+    font-size: 30pt; }
+  #summary a {
+    color: white;
+    font-weight: bold; }
+
+#download {
+  margin-top: 60px;
+  width: 180px;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  font-size: 13pt; }
+  #download img {
+    margin-top: -7px;
+    margin-left: -10px; }
+
+#icon {
+  margin-top: 20px;
+  margin-left: 50px; }
+
+nav {
+  text-align: center;
+  background: #e0e0e0 url(../img/light.png) 98% center no-repeat; }
+
+h1 {
+  margin-bottom: 20px;
+  margin-top: 20px; }
+
+footer {
+  height: 60px;
+  background: #e0e0e0;
+  margin-top: 20px;
+  padding: 10px 20px; }

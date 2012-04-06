@@ -1,0 +1,103 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-type"}
+      %title Nimbus
+      %link{:charset => "utf-8", :href => "css/bootstrap.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+      %link{:charset => "utf-8", :href => "css/style.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+  %body
+    .container
+      %header
+        .row
+          .span4
+            %img#icon{:src => "img/icon.png"}/
+          #summary.span5
+            %h1 Nimbus
+            %p 
+              Nimbus uses FUSE to bring the native file management experience to 
+              %a{:href=>"http://getcloudapp.com/"}
+                CloudApp.
+              It allows you to sort, open, upload, delete, and Quicklook your uploaded files.
+          .span1
+            %button#download.btn.btn-warning.disabled{:href => "/downloads.html"}
+              %img{:src => "img/download.png"}
+              Coming Soon
+      %nav
+        %ul.nav.nav-pills
+          %li
+            %a{:href => "https://github.com/NimbusFS/Nimbus"} Github
+          / %li
+          /   %a{:href => "#badges"} Wiki
+          / %li
+          /   %a{:href => ""} Issues
+          %li
+            %a{:href => "http://www.kickstarter.com/projects/1650920829/nimbus"} Kickstarter
+
+      %h1 Features
+      .row
+        .span3
+          .thumbnail
+            %img{:alt => "", :src => "http://placehold.it/260x180"}
+              .caption
+                %h5 Native File Management
+                %p Nimbus mounts your CloudApp files as a drive you can open in Finder. Open, rename, delete, add, and Quicklook your uploaded files!
+                
+        .span3
+          .thumbnail
+            %img{:alt => "", :src => "http://placehold.it/260x180"}
+              .caption
+                %h5 Fast Access
+                %p Nimbus downloads only the files it needs to, saving you bandwidth and time. It also caches frequently used files for speedy access.
+        
+        .span3
+          .thumbnail
+            %img{:alt => "", :src => "http://placehold.it/260x180"}
+              .caption
+                %h5 Painless Install
+                %p Simply download and install. OSXFuse will be installed if you do not already have it.
+          
+        .span3
+          .thumbnail
+            %img{:alt => "", :src => "http://placehold.it/260x180"}
+              .caption
+                %h5 Sortable
+                %p Nimbus creates virtual folders that allow you to view your files by category: Popular, Images, Text, Audio, Video, etc.
+      
+      .row
+        .span6
+          %h1 How does it work?
+          %p Nimbus sits between the CloudApp API and OSXFUSE API, translating Finder actions into CloudApp requests.
+
+        .span6
+          %h1 Contributing to Nimbus
+          Feel free to fork and submit a pull request. If you're thinking of a bigger feature, shoot us a message on Github.
+          
+          %h2 Sponsors
+          A big thanks to all our Kickstarter sponsors!
+          %ul
+            %li Jonathan Chen
+            
+            %li Kristian Øllegaard
+            %li Fumimasa Kamibeppu
+            %li Dylan Parker
+            %li Sean Wylie
+            
+            %li Bill Kempthorne
+            %li Liz Lettieri
+            
+            %li Matthew Simo
+            %li Marc Scala
+            %li Jonathan Seely
+            %li Atle Mo
+            %li Rick Benavidez
+            %li Wells Riley
+            %li Charles Magnuson
+            %li William McBroom
+            %li Peter O'Connor
+            
+            %li Arturs Mednis
+
+      %footer
+        %h3 Contributors
+        %a{:href => "http://chris.sevenservers.com"} Chris Li
+        %a{:href => "http://sagarpandya.com"} Sagar Pandya

@@ -1,95 +1,130 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
-
-  <title>Nimbus</title>
-  <meta name="description" content="A FUSE plugin for CloudApp">
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-</head>
-
-<body>
-
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Nimbus</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">A FUSE plugin for CloudApp</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/NimbusFS/Nimbus/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/NimbusFS/Nimbus/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/NimbusFS/Nimbus" class="code">fork Nimbus on GitHub</a>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-type'>
+      <title>Nimbus</title>
+      <link charset='utf-8' href='css/bootstrap.css' media='screen' rel='stylesheet' type='text/css' />
+      <link charset='utf-8' href='css/style.css' media='screen' rel='stylesheet' type='text/css' />
+    </meta>
+  </head>
+  <body>
+    <div class='container'>
+      <header>
+        <div class='row'>
+          <div class='span4'>
+            <img id='icon' src='img/icon.png' />
+          </div>
+          <div class='span5' id='summary'>
+            <h1>Nimbus</h1>
+            <p>
+              Nimbus uses FUSE to bring the native file management experience to
+              <a href='http://getcloudapp.com/'>
+                CloudApp.
+              </a>
+              It allows you to sort, open, upload, delete, and Quicklook your uploaded files.
+            </p>
+          </div>
+          <div class='span1'>
+            <button class='btn btn-warning disabled' href='/downloads.html' id='download'>
+              <img src='img/download.png' />
+              Coming Soon
+            </button>
+          </div>
         </div>
-        <span class="blc"></span><span class="trc"></span>
+      </header>
+      <nav>
+        <ul class='nav nav-pills'>
+          <li>
+            <a href='https://github.com/NimbusFS/Nimbus'>Github</a>
+          </li>
+          <!-- %li -->
+          <!-- %a{:href => "#badges"} Wiki -->
+          <!-- %li -->
+          <!-- %a{:href => ""} Issues -->
+          <li>
+            <a href='http://www.kickstarter.com/projects/1650920829/nimbus'>Kickstarter</a>
+          </li>
+        </ul>
+      </nav>
+      <h1>Features</h1>
+      <div class='row'>
+        <div class='span3'>
+          <div class='thumbnail'>
+            <img alt='' src='http://placehold.it/260x180'>
+              <div class='caption'>
+                <h5>Native File Management</h5>
+                <p>Nimbus mounts your CloudApp files as a drive you can open in Finder. Open, rename, delete, add, and Quicklook your uploaded files!</p>
+              </div>
+            </img>
+          </div>
         </div>
-        <article class="markdown-body">
-          <h3>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact support@github.com and we’ll help you sort it out.</p>
-        </article>
+        <div class='span3'>
+          <div class='thumbnail'>
+            <img alt='' src='http://placehold.it/260x180'>
+              <div class='caption'>
+                <h5>Fast Access</h5>
+                <p>Nimbus downloads only the files it needs to, saving you bandwidth and time. It also caches frequently used files for speedy access.</p>
+              </div>
+            </img>
+          </div>
+        </div>
+        <div class='span3'>
+          <div class='thumbnail'>
+            <img alt='' src='http://placehold.it/260x180'>
+              <div class='caption'>
+                <h5>Painless Install</h5>
+                <p>Simply download and install. OSXFuse will be installed if you do not already have it.</p>
+              </div>
+            </img>
+          </div>
+        </div>
+        <div class='span3'>
+          <div class='thumbnail'>
+            <img alt='' src='http://placehold.it/260x180'>
+              <div class='caption'>
+                <h5>Sortable</h5>
+                <p>Nimbus creates virtual folders that allow you to view your files by category: Popular, Images, Text, Audio, Video, etc.</p>
+              </div>
+            </img>
+          </div>
+        </div>
       </div>
+      <div class='row'>
+        <div class='span6'>
+          <h1>How does it work?</h1>
+          <p>Nimbus sits between the CloudApp API and OSXFUSE API, translating Finder actions into CloudApp requests.</p>
+        </div>
+        <div class='span6'>
+          <h1>Contributing to Nimbus</h1>
+          Feel free to fork and submit a pull request. If you're thinking of a bigger feature, shoot us a message on Github.
+          <h2>Sponsors</h2>
+          A big thanks to all our Kickstarter sponsors!
+          <ul>
+            <li>Jonathan Chen</li>
+            <li>Kristian Øllegaard</li>
+            <li>Fumimasa Kamibeppu</li>
+            <li>Dylan Parker</li>
+            <li>Sean Wylie</li>
+            <li>Bill Kempthorne</li>
+            <li>Liz Lettieri</li>
+            <li>Matthew Simo</li>
+            <li>Marc Scala</li>
+            <li>Jonathan Seely</li>
+            <li>Atle Mo</li>
+            <li>Rick Benavidez</li>
+            <li>Wells Riley</li>
+            <li>Charles Magnuson</li>
+            <li>William McBroom</li>
+            <li>Peter O'Connor</li>
+            <li>Arturs Mednis</li>
+          </ul>
+        </div>
+      </div>
+      <footer>
+        <h3>Contributors</h3>
+        <a href='http://chris.sevenservers.com'>Chris Li</a>
+        <a href='http://sagarpandya.com'>Sagar Pandya</a>
+      </footer>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/NimbusFS" class="avatar"><img src="https://secure.gravatar.com/avatar/0e62f32915a5bf1427ec0aed13fa874e?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" width="48" height="48"/></a> <a href="https://github.com/NimbusFS">NimbusFS</a> maintains <a href="https://github.com/NimbusFS/Nimbus">Nimbus</a></p>
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/NimbusFS/Nimbus/tarball/master" class="tar">tar</a><a href="https://github.com/NimbusFS/Nimbus/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-            <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-30544712-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
-</body>
+  </body>
 </html>

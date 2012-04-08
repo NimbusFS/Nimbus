@@ -166,9 +166,9 @@
     // Nimbus is already mounted
     else
     {
-        [nimbusFS dealloc];
+        [nimbusFS unmount];
         nimbusFS = nil;
-        
+        /*
         [_mountButton setTitle:@"Mount"];        
         [_usernameField setEnabled:YES];
         [_passwordField setEnabled:YES];
@@ -176,6 +176,7 @@
         [_mountButton setEnabled:YES];
         [_loginFailedLabel setHidden:YES];
         [_loginProgressIndicator setHidden:YES];
+         */
     }
 }
 
@@ -188,11 +189,11 @@
 }
 
 - (void)didUnmount:(NSNotification*)notification {
-    //[[NSApplication sharedApplication] terminate:nil];
     [_usernameField setEnabled:YES];
     [_passwordField setEnabled:YES];
     [_mountButton setEnabled:YES];
     [_mountButton setTitle:@"Mount"];
+    [_mountPathField setEnabled:YES];
     [_loginFailedLabel setHidden:YES];
     [_loginProgressIndicator setHidden:YES];
 }

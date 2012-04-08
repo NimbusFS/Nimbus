@@ -20,6 +20,7 @@
     NSString* cachePath;
     
     BOOL isLoggedIn;
+    BOOL loginFailed;
     BOOL hasMorePages;
     NSInteger whichPage;
 }

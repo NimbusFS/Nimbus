@@ -30,23 +30,24 @@
     self.engine_ = [CLAPIEngine engineWithDelegate:self];
 	engine_.email = username;
 	engine_.password = password;
-    
-    // initialize the local caches of files in the Cloud Account
-    cloudFiles = [[NSMutableDictionary alloc] init];
-    cachePath = [[NSString alloc] initWithFormat:@"%@/Library/Application Support/Nimbus/Cache.%@", NSHomeDirectory(), username];
-    [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:YES attributes:nil error:nil];
-   
-    isLoggedIn = NO;
-    hasMorePages = YES;
-    whichPage = 1;
+    engine_.clearsCookies = YES;
     
     if ([self login])
     {
+        NSLog(@"Login succeeded");
+        // initialize the local caches of files in the Cloud Account
+        cloudFiles = [[NSMutableDictionary alloc] init];
+        cachePath = [[NSString alloc] initWithFormat:@"%@/Library/Application Support/Nimbus/Cache.%@", NSHomeDirectory(), username];
+        [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:YES attributes:nil error:nil];
+        
+        isLoggedIn = NO;
+        hasMorePages = YES;
+        whichPage = 1;
+        
         // initialize the FUSE filesystem object
         fs_ = [[GMUserFileSystem alloc] initWithDelegate:self isThreadSafe:YES];
         
         NSMutableArray* options = [NSMutableArray array];
-        //[options addObject:@"rdwr"];
         [options addObject:@"volname=NimbusFS"];
         [options addObject:[NSString stringWithFormat:@"volicon=%@", [[NSBundle mainBundle] pathForResource:@"Nimbus" ofType:@"icns"]]];
         [fs_ mountAtPath:mountPath withOptions:options];
@@ -58,26 +59,37 @@
         return self;
     }
     else
+    {
+        NSLog(@"Login failed");
         return nil;
+    }
 }
 
 - (void) unmount
 {
-    [fs_ unmount];
+    [self dealloc];
 }
 
 - (BOOL) login
 {
+    NSLog(@"Logging in with username=%@, password=%@", engine_.email, engine_.password);
+    
     // try to get user info
     // wait until it succeeds or fails
     [engine_ getAccountInformationWithUserInfo:nil];
     
-    NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:5.0]; // 5 second timeout
+    NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:15.0]; // 15 second timeout
 
     while (!isLoggedIn && [timeoutDate timeIntervalSinceNow] > 0)
     {
-        NSDate *stopDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+        NSDate *stopDate = [NSDate dateWithTimeIntervalSinceNow:0.5];
         [[NSRunLoop currentRunLoop] runUntilDate:stopDate];
+        
+        if (loginFailed)
+        {
+            isLoggedIn = NO;
+            break;
+        }
     }
     return isLoggedIn;
 }
@@ -291,7 +303,12 @@
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
 	NSLog(@"[FAIL]: %@, %@", connectionIdentifier, error);
-    [self refreshFiles];
+    
+    if (!isLoggedIn)
+        loginFailed = YES;
+    
+    if (isLoggedIn)
+        [self refreshFiles];
 }
 
 @end

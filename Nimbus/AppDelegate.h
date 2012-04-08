@@ -18,14 +18,13 @@
 @property (assign) IBOutlet NSButton *mountButton;
 @property (assign) IBOutlet NSTextField *usernameField;
 @property (assign) IBOutlet NSSecureTextField *passwordField;
+@property (assign) IBOutlet NSTextField *mountPathField;
 @property (assign) IBOutlet NSTextField *loginFailedLabel;
 @property (assign) IBOutlet NSProgressIndicator *loginProgressIndicator;
+@property (assign) IBOutlet NSTextField *descriptionLabel;
 
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-
-- (IBAction)saveAction:(id)sender;
 - (IBAction)mount:(id)sender;
+
++(NSArray*) getCloudAppInfoFromKeychain;
 
 @end

@@ -84,7 +84,6 @@
 
 - (void) getNextPage
 {
-    //NSLog(@"Getting page %ld", whichPage);
     [engine_ getItemListStartingAtPage:whichPage itemsPerPage:10 userInfo:nil];
 }
 
@@ -120,7 +119,6 @@
 {
     @synchronized(self)
     {
-        //NSLog(@"request for contents for path: %@", path);
         if ( [cloudFiles objectForKey:[path lastPathComponent]] == nil )
             return nil;
         

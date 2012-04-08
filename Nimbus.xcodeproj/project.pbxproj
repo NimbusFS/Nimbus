@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B01DE751531647C0017B737 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B01DE741531647C0017B737 /* Security.framework */; };
+		1B01DE78153165630017B737 /* NSAttributedString+Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B01DE77153165630017B737 /* NSAttributedString+Hyperlink.m */; };
 		1B24960F14EB9B49007F8166 /* NSError+POSIX.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B24960E14EB9B49007F8166 /* NSError+POSIX.m */; };
 		1B42176E14F97E9300E95F2F /* Nimbus.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1B42176D14F97E9300E95F2F /* Nimbus.icns */; };
 		1B7F4AEB14DB61A5002D1B93 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */; };
@@ -15,7 +17,6 @@
 		1B7F4AFB14DB61A5002D1B93 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4AF914DB61A5002D1B93 /* Credits.rtf */; };
 		1B7F4AFE14DB61A5002D1B93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */; };
 		1B7F4B0114DB61A6002D1B93 /* NimbusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4AFF14DB61A6002D1B93 /* NimbusView.xib */; };
-		1B7F4B0414DB61A6002D1B93 /* Nimbus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4B0214DB61A6002D1B93 /* Nimbus.xcdatamodeld */; };
 		1B7F4B0B14DB61E8002D1B93 /* OSXFUSE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4B0A14DB61E8002D1B93 /* OSXFUSE.framework */; };
 		1B7F4B1014DB6272002D1B93 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4B0F14DB6272002D1B93 /* libCloud.a */; };
 		1B7F4B1F14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */; };
@@ -33,6 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B01DE741531647C0017B737 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1B01DE76153165630017B737 /* NSAttributedString+Hyperlink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Hyperlink.h"; sourceTree = "<group>"; };
+		1B01DE77153165630017B737 /* NSAttributedString+Hyperlink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Hyperlink.m"; sourceTree = "<group>"; };
 		1B041F3A14DFE95200816C01 /* Cloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cloud.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Cloud.h"; sourceTree = "<group>"; };
 		1B041F3B14DFE95200816C01 /* CLAPIEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPIEngine.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/CLAPIEngine.h"; sourceTree = "<group>"; };
 		1B041F3C14DFE96500816C01 /* CLWebItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLWebItem.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Model/CLWebItem.h"; sourceTree = "<group>"; };
@@ -64,7 +68,6 @@
 		1B7F4AFC14DB61A5002D1B93 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1B7F4B0014DB61A6002D1B93 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NimbusView.xib; sourceTree = "<group>"; };
-		1B7F4B0314DB61A6002D1B93 /* Nimbus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nimbus.xcdatamodel; sourceTree = "<group>"; };
 		1B7F4B0A14DB61E8002D1B93 /* OSXFUSE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSXFUSE.framework; path = Library/Frameworks/OSXFUSE.framework; sourceTree = SDKROOT; };
 		1B7F4B0F14DB6272002D1B93 /* libCloud.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCloud.a; path = "../../../../Library/Developer/Xcode/DerivedData/Nimbus-ddkbencdxnknxlanrbpwpfouqfqs/Build/Products/Debug/libCloud.a"; sourceTree = "<group>"; };
 		1B7F4B1D14DB6EB1002D1B93 /* NimbusFUSEFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusFUSEFileSystem.h; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B7F4B1014DB6272002D1B93 /* libCloud.a in Frameworks */,
+				1B01DE751531647C0017B737 /* Security.framework in Frameworks */,
 				1B7F4B0B14DB61E8002D1B93 /* OSXFUSE.framework in Frameworks */,
 				1B7F4AEB14DB61A5002D1B93 /* Cocoa.framework in Frameworks */,
 			);
@@ -87,6 +91,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B01DE7915316A190017B737 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				1B24960D14EB9B49007F8166 /* NSError+POSIX.h */,
+				1B24960E14EB9B49007F8166 /* NSError+POSIX.m */,
+				1B01DE76153165630017B737 /* NSAttributedString+Hyperlink.h */,
+				1B01DE77153165630017B737 /* NSAttributedString+Hyperlink.m */,
+			);
+			name = Categories;
+			path = Nimbus;
+			sourceTree = "<group>";
+		};
 		1B041F3914DFE93400816C01 /* Indexing headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				1B6436E014FC16FE007EAD05 /* Cloud.xcodeproj */,
+				1B01DE7915316A190017B737 /* Categories */,
 				1B041F3914DFE93400816C01 /* Indexing headers */,
 				1B7F4AF014DB61A5002D1B93 /* Nimbus */,
 				1B7F4AE914DB61A5002D1B93 /* Frameworks */,
@@ -138,37 +155,27 @@
 		1B7F4AE914DB61A5002D1B93 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1B7F4B0A14DB61E8002D1B93 /* OSXFUSE.framework */,
-				1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */,
-				1B7F4AEC14DB61A5002D1B93 /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		1B7F4AEC14DB61A5002D1B93 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
+				1B01DE741531647C0017B737 /* Security.framework */,
 				1B7F4AED14DB61A5002D1B93 /* AppKit.framework */,
 				1B7F4AEE14DB61A5002D1B93 /* CoreData.framework */,
 				1B7F4AEF14DB61A5002D1B93 /* Foundation.framework */,
+				1B7F4B0A14DB61E8002D1B93 /* OSXFUSE.framework */,
+				1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */,
 			);
-			name = "Other Frameworks";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		1B7F4AF014DB61A5002D1B93 /* Nimbus */ = {
 			isa = PBXGroup;
 			children = (
-				1B7F4B2414DB7083002D1B93 /* Resources */,
-				1B24960D14EB9B49007F8166 /* NSError+POSIX.h */,
-				1B24960E14EB9B49007F8166 /* NSError+POSIX.m */,
-				1B7F4B1D14DB6EB1002D1B93 /* NimbusFUSEFileSystem.h */,
-				1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */,
-				1BC9A27314DFBA2B00A7B9FE /* NimbusFile.h */,
-				1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */,
 				1B7F4AFC14DB61A5002D1B93 /* AppDelegate.h */,
 				1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */,
+				1BC9A27314DFBA2B00A7B9FE /* NimbusFile.h */,
+				1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */,
+				1B7F4B1D14DB6EB1002D1B93 /* NimbusFUSEFileSystem.h */,
+				1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */,
 				1B7F4AFF14DB61A6002D1B93 /* NimbusView.xib */,
-				1B7F4B0214DB61A6002D1B93 /* Nimbus.xcdatamodeld */,
+				1B7F4B2414DB7083002D1B93 /* Resources */,
 				1B7F4AF114DB61A5002D1B93 /* Supporting Files */,
 			);
 			path = Nimbus;
@@ -178,11 +185,11 @@
 			isa = PBXGroup;
 			children = (
 				1B7F4B0F14DB6272002D1B93 /* libCloud.a */,
-				1B7F4AF214DB61A5002D1B93 /* Nimbus-Info.plist */,
-				1B7F4AF314DB61A5002D1B93 /* InfoPlist.strings */,
 				1B7F4AF614DB61A5002D1B93 /* main.m */,
 				1B7F4AF814DB61A5002D1B93 /* Nimbus-Prefix.pch */,
+				1B7F4AF214DB61A5002D1B93 /* Nimbus-Info.plist */,
 				1B7F4AF914DB61A5002D1B93 /* Credits.rtf */,
+				1B7F4AF314DB61A5002D1B93 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -277,10 +284,10 @@
 			files = (
 				1B7F4AF714DB61A5002D1B93 /* main.m in Sources */,
 				1B7F4AFE14DB61A5002D1B93 /* AppDelegate.m in Sources */,
-				1B7F4B0414DB61A6002D1B93 /* Nimbus.xcdatamodeld in Sources */,
 				1B7F4B1F14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m in Sources */,
 				1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */,
 				1B24960F14EB9B49007F8166 /* NSError+POSIX.m in Sources */,
+				1B01DE78153165630017B737 /* NSAttributedString+Hyperlink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,19 +426,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		1B7F4B0214DB61A6002D1B93 /* Nimbus.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				1B7F4B0314DB61A6002D1B93 /* Nimbus.xcdatamodel */,
-			);
-			currentVersion = 1B7F4B0314DB61A6002D1B93 /* Nimbus.xcdatamodel */;
-			path = Nimbus.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 1B7F4ADD14DB61A5002D1B93 /* Project object */;
 }

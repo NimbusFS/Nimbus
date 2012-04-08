@@ -8,7 +8,10 @@
 
 #import "AppDelegate.h"
 #import "NimbusFUSEFileSystem.h"
+#import "NSAttributedString+Hyperlink.h"
 #import <OSXFUSE/OSXFUSE.h>
+
+#include <Security/Security.h>
 
 @implementation AppDelegate
 
@@ -16,17 +19,57 @@
 @synthesize mountButton = _mountButton;
 @synthesize usernameField = _usernameField;
 @synthesize passwordField = _passwordField;
+@synthesize mountPathField = _mountPathField;
+@synthesize descriptionLabel = _descriptionLabel;
 @synthesize loginFailedLabel = _loginFailedLabel;
 @synthesize loginProgressIndicator = _loginProgressIndicator;
-@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
-@synthesize managedObjectModel = __managedObjectModel;
-@synthesize managedObjectContext = __managedObjectContext;
+
++(NSArray *)getCloudAppInfoFromKeychain
+{
+    UInt32 passwordLength = 0;
+    char *password = nil;
+    
+    SecKeychainItemRef item = nil;
+    OSStatus ret = SecKeychainFindGenericPassword(NULL, 5, "Cloud", 0, NULL, &passwordLength, (void**)&password, &item);
+    
+    UInt32 attributeTags[1];
+    *attributeTags = kSecAccountItemAttr;
+    
+    UInt32 formatConstants[1];
+    *formatConstants = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+    
+    struct SecKeychainAttributeInfo
+    {
+        UInt32 count;
+        UInt32 *tag;
+        UInt32 *format;
+    } attributeInfo;
+    
+    attributeInfo.count = 1;
+    attributeInfo.tag = attributeTags;
+    attributeInfo.format = formatConstants;
+    
+    SecKeychainAttributeList *attributeList = nil;
+    OSStatus attributeRet = SecKeychainItemCopyAttributesAndData(item, &attributeInfo, NULL, &attributeList, 0, NULL);
+    
+    if (attributeRet != noErr || !item)
+    {
+        NSLog(@"Error - %s", GetMacOSStatusErrorString(ret));
+        return nil;
+    }
+    
+    SecKeychainAttribute accountNameAttribute = attributeList->attr[0];
+    NSString* accountName = [[[NSString alloc] initWithData:[NSData dataWithBytes:accountNameAttribute.data length:accountNameAttribute.length] encoding:NSUTF8StringEncoding] autorelease];
+    
+    NSString *passwordString = [[[NSString alloc] initWithData:[NSData dataWithBytes:password length:passwordLength] encoding:NSUTF8StringEncoding] autorelease];
+    
+    SecKeychainItemFreeContent(NULL, password);
+    
+    return [[NSArray alloc] initWithObjects:accountName, passwordString, nil];
+}
 
 - (void)dealloc
 {
-    [__persistentStoreCoordinator release];
-    [__managedObjectModel release];
-    [__managedObjectContext release];
     [super dealloc];
 }
 
@@ -38,39 +81,101 @@
     [center addObserver:self selector:@selector(didUnmount:)
                    name:kGMUserFileSystemDidUnmount object:nil];
     
+    NSArray* loginInfo = [AppDelegate getCloudAppInfoFromKeychain];
+    NSString *username;
+    NSString *password;
+    
+    if (loginInfo == nil)
+    {
+        [_usernameField bind:@"value"
+                    toObject:[NSUserDefaultsController sharedUserDefaultsController]
+                 withKeyPath:@"values.NimbusUserName"
+                     options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
+                                                         forKey:@"NSContinuouslyUpdatesValue"]];
+    }
+    else
+    {
+        username = [loginInfo objectAtIndex:0];
+        password = [loginInfo objectAtIndex:1];
+        [_usernameField setStringValue:username];
+        [_passwordField setStringValue:password];
+    }
+    
+    [_mountPathField bind:@"value"
+                 toObject:[NSUserDefaultsController sharedUserDefaultsController]
+              withKeyPath:@"values.NimbusMountPath"
+                  options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
+                                                      forKey:@"NSContinuouslyUpdatesValue"]];    
+    
+    [_descriptionLabel setAllowsEditingTextAttributes: YES];
+    [_descriptionLabel setSelectable: YES];
+    
+    NSURL* url = [NSURL URLWithString:@"http://getcloudapp.com"];
+    
+    NSMutableAttributedString* string = [[NSMutableAttributedString alloc] initWithString:@"Get a CloudApp account at "];
+    [string appendAttributedString:[NSAttributedString hyperlinkFromString:@"www.getcloudapp.com" withURL:url]];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:@". Then sign in below."]];
+    
+    NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                [NSFont fontWithName:@"Lucida Grande" size:13], NSFontAttributeName,
+                                nil];
+    NSRange range = NSMakeRange(0, [string length]);
+    [string addAttributes:attributes range:range];
+    
+    [_descriptionLabel setAttributedStringValue:string];
     [_loginFailedLabel setHidden:YES];
     [_loginProgressIndicator setHidden:YES];
 }
 
 -(void) mount:(id)selector
 {
-    if (nimbusFS == nil)
-    {    
+    // we haven't yet mounted Nimbus
+    if (nimbusFS == nil && [[_mountButton title] isEqualToString:@"Mount"])
+    {
         [_usernameField setEnabled:NO];
         [_passwordField setEnabled:NO];
+        [_mountPathField setEnabled:NO];
         [_mountButton setEnabled:NO];
         [_loginProgressIndicator setHidden:NO];
 
         // mount the thing
-        nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:@"/Volumes/Nimbus"];
+        nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:[_mountPathField stringValue]];
         
+        // mounting failed
         if (nimbusFS == nil)
         {
             [_usernameField setEnabled:YES];
             [_passwordField setEnabled:YES];
+            [_mountPathField setEnabled:YES];
             [_mountButton setEnabled:YES];
             [_loginFailedLabel setHidden:NO];
             [_loginProgressIndicator setHidden:YES];
-        } else {
+        }
+        // mounting succeeded
+        else
+        {
+            [_mountButton setTitle:@"Unmount"];
             [_usernameField setEnabled:NO];
             [_passwordField setEnabled:NO];
+            [_mountPathField setEnabled:NO];
             [_mountButton setEnabled:YES];
-            [_mountButton setTitle:@"Unmount"];
             [_loginFailedLabel setHidden:YES];
             [_loginProgressIndicator setHidden:YES];
         }
-    } else {
-        [nimbusFS unmount];
+    }
+    // Nimbus is already mounted
+    else
+    {
+        [nimbusFS dealloc];
+        nimbusFS = nil;
+        
+        [_mountButton setTitle:@"Mount"];        
+        [_usernameField setEnabled:YES];
+        [_passwordField setEnabled:YES];
+        [_mountPathField setEnabled:YES];
+        [_mountButton setEnabled:YES];
+        [_loginFailedLabel setHidden:YES];
+        [_loginProgressIndicator setHidden:YES];
     }
 }
 
@@ -92,173 +197,10 @@
     [_loginProgressIndicator setHidden:YES];
 }
 
-/**
-    Returns the directory the application uses to store the Core Data store file. This code uses a directory named "Nimbus" in the user's Library directory.
- */
-- (NSURL *)applicationFilesDirectory {
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *libraryURL = [[fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
-    return [libraryURL URLByAppendingPathComponent:@"Nimbus"];
-}
-
-/**
-    Creates if necessary and returns the managed object model for the application.
- */
-- (NSManagedObjectModel *)managedObjectModel {
-    if (__managedObjectModel) {
-        return __managedObjectModel;
-    }
-	
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Nimbus" withExtension:@"momd"];
-    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
-    return __managedObjectModel;
-}
-
-/**
-    Returns the persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. (The directory for the store is created, if necessary.)
- */
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (__persistentStoreCoordinator) {
-        return __persistentStoreCoordinator;
-    }
-
-    NSManagedObjectModel *mom = [self managedObjectModel];
-    if (!mom) {
-        NSLog(@"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
-        return nil;
-    }
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *applicationFilesDirectory = [self applicationFilesDirectory];
-    NSError *error = nil;
-    
-    NSDictionary *properties = [applicationFilesDirectory resourceValuesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] error:&error];
-        
-    if (!properties) {
-        BOOL ok = NO;
-        if ([error code] == NSFileReadNoSuchFileError) {
-            ok = [fileManager createDirectoryAtPath:[applicationFilesDirectory path] withIntermediateDirectories:YES attributes:nil error:&error];
-        }
-        if (!ok) {
-            [[NSApplication sharedApplication] presentError:error];
-            return nil;
-        }
-    }
-    else {
-        if ([[properties objectForKey:NSURLIsDirectoryKey] boolValue] != YES) {
-            // Customize and localize this error.
-            NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", [applicationFilesDirectory path]]; 
-            
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setValue:failureDescription forKey:NSLocalizedDescriptionKey];
-            error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:101 userInfo:dict];
-            
-            [[NSApplication sharedApplication] presentError:error];
-            return nil;
-        }
-    }
-    
-    NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"Nimbus.storedata"];
-    NSPersistentStoreCoordinator *coordinator = [[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom] autorelease];
-    if (![coordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
-        [[NSApplication sharedApplication] presentError:error];
-        return nil;
-    }
-    __persistentStoreCoordinator = [coordinator retain];
-
-    return __persistentStoreCoordinator;
-}
-
-/**
-    Returns the managed object context for the application (which is already
-    bound to the persistent store coordinator for the application.) 
- */
-- (NSManagedObjectContext *)managedObjectContext {
-    if (__managedObjectContext) {
-        return __managedObjectContext;
-    }
-
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (!coordinator) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:@"Failed to initialize the store" forKey:NSLocalizedDescriptionKey];
-        [dict setValue:@"There was an error building up the data file." forKey:NSLocalizedFailureReasonErrorKey];
-        NSError *error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
-        [[NSApplication sharedApplication] presentError:error];
-        return nil;
-    }
-    __managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [__managedObjectContext setPersistentStoreCoordinator:coordinator];
-
-    return __managedObjectContext;
-}
-
-/**
-    Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
- */
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
-    return [[self managedObjectContext] undoManager];
-}
-
-/**
-    Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
- */
-- (IBAction)saveAction:(id)sender {
-    NSError *error = nil;
-    
-    if (![[self managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
-    }
-
-    if (![[self managedObjectContext] save:&error]) {
-        [[NSApplication sharedApplication] presentError:error];
-    }
-}
-
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
     // Save changes in the application's managed object context before the application terminates.
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-    if (!__managedObjectContext) {
-        return NSTerminateNow;
-    }
-
-    if (![[self managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
-        return NSTerminateCancel;
-    }
-
-    if (![[self managedObjectContext] hasChanges]) {
-        return NSTerminateNow;
-    }
-
-    NSError *error = nil;
-    if (![[self managedObjectContext] save:&error]) {
-
-        // Customize this code block to include application-specific recovery steps.              
-        BOOL result = [sender presentError:error];
-        if (result) {
-            return NSTerminateCancel;
-        }
-
-        NSString *question = NSLocalizedString(@"Could not save changes while quitting. Quit anyway?", @"Quit without saves error question message");
-        NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
-        NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
-        NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
-        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-        [alert setMessageText:question];
-        [alert setInformativeText:info];
-        [alert addButtonWithTitle:quitButton];
-        [alert addButtonWithTitle:cancelButton];
-
-        NSInteger answer = [alert runModal];
-        
-        if (answer == NSAlertAlternateReturn) {
-            return NSTerminateCancel;
-        }
-    }
 
     return NSTerminateNow;
 }

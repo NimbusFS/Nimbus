@@ -72,8 +72,6 @@
 
 - (BOOL) login
 {
-    NSLog(@"Logging in with username=%@, password=%@", engine_.email, engine_.password);
-    
     // try to get user info
     // wait until it succeeds or fails
     [engine_ getAccountInformationWithUserInfo:nil];

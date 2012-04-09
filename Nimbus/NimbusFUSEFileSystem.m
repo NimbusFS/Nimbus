@@ -3,7 +3,7 @@
 //  Nimbus
 //
 //  Created by Sagar Pandya on 2/2/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012. All rights reserved.
 //
 
 #import "NimbusFUSEFileSystem.h"
@@ -152,6 +152,7 @@
 {
     @synchronized(self)
     {
+        NSLog(@"Renaming...");
         NSString *newname = [destination lastPathComponent];
 
         NimbusFile *file = [cloudFiles objectForKey:[source lastPathComponent]];
@@ -184,6 +185,7 @@
 {
     @synchronized(self)
     {
+        NSLog(@"Removing...");
         NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
         CLWebItem *item = [file itsCLWebItem];
         
@@ -267,6 +269,7 @@
 -(void) itemDeletionDidSucceed:(CLWebItem *)resultItem connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
     // neato
+    NSLog(@"Deletion succeeded.");
 }
 
 - (void)itemListRetrievalSucceeded:(NSArray *)items connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo

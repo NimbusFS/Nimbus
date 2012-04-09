@@ -3,7 +3,7 @@
 //  Nimbus
 //
 //  Created by Sagar Pandya on 2/2/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -30,7 +30,7 @@
     char *password = nil;
     
     SecKeychainItemRef item = nil;
-    OSStatus ret = SecKeychainFindGenericPassword(NULL, 5, "Cloud", 0, NULL, &passwordLength, (void**)&password, &item);
+    OSStatus ret = SecKeychainFindGenericPassword(NULL, 8, "CloudApp", 0, NULL, &passwordLength, (void**)&password, &item);
     
     UInt32 attributeTags[1];
     *attributeTags = kSecAccountItemAttr;
@@ -202,7 +202,13 @@
 
     // Save changes in the application's managed object context before the application terminates.
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    
+    if (nimbusFS != nil)
+    {
+        [nimbusFS unmount];
+        nimbusFS = nil;
+    }
+    
     return NSTerminateNow;
 }
 

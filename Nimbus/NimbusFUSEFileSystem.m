@@ -148,7 +148,8 @@
  * @param error Should be filled with a POSIX error in case of failure.
  * @result An array of NSString or nil on error.
  */
-- (NSArray *)contentsOfDirectoryAtPath:(NSString *)path error:(NSError **)error {
+- (NSArray *)contentsOfDirectoryAtPath:(NSString *)path error:(NSError **)error 
+{
     @synchronized(self)
     {
         return [cloudFiles allKeys];
@@ -190,6 +191,7 @@
  */
 - (NSDictionary *)attributesOfItemAtPath:(NSString *)path userData:(id)userData error:(NSError **)error
 {
+    NSLog(@"Attributes of item at path %@", path);
     if (!path)
     {
         if (error)
@@ -220,9 +222,16 @@
             CLWebItem *item = file.itsCLWebItem;
             creationDate = [item createdAt];
             modificationDate = [item updatedAt];
+            
+            if(creationDate == nil)
+                creationDate = [NSDate date];
+            
+            if(modificationDate == nil)
+                modificationDate = [NSDate date];
         }
         
         NSMutableDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithInt:0] , NSFileSize,
                                      [NSNumber numberWithInt:mode], NSFilePosixPermissions,
                                      [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
                                      [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
@@ -314,6 +323,7 @@
  */
 - (NSData *)contentsAtPath:(NSString *)path
 {
+    NSLog(@"Contents at path %@", path);
     @synchronized(self)
     {
         if ( [cloudFiles objectForKey:[path lastPathComponent]] == nil )
@@ -451,6 +461,7 @@
                    attributes:(NSDictionary *)attributes
                         error:(NSError **)error
 {
+    NSLog(@"Create Directory at Path %@", path);
     return NO;
 }
 
@@ -471,12 +482,11 @@
               attributes:(NSDictionary *)attributes
                 userData:(id *)userData 
                    error:(NSError **)error
-{
-    NSLog(@"Adding file %@", path);
-    
+{    
     if ([path isEqualToString:@"/.DS_Store"]) {
         return NO;
     }
+    NSLog(@"Adding file %@", path);
     
     if ([cloudFiles objectForKey:[path lastPathComponent]]) {
         // File exists!
@@ -488,7 +498,7 @@
     
     NimbusFile *nf = [[NimbusFile alloc] initWithName:[path lastPathComponent] 
                                          andCachePath:cachePath];    
-    [cloudFiles setObject:nf forKey:nf.itsCLWebItem.name];
+    [cloudFiles setObject:nf forKey:[nf.itsCLWebItem name]];
     
     NSLog(@"%@", @"File created");
     return YES;
@@ -589,123 +599,6 @@
     }
 }
 
-
-#pragma mark Linking an Item
-
-/*!
- * @abstract Creates a hard link.
- * @seealso man link(2)
- * @param path The path for the created hard link.
- * @param otherPath The path that is the target of the created hard link.
- * @param error Should be filled with a POSIX error in case of failure.
- * @result YES if the hard link was successfully created.
- */
-- (BOOL)linkItemAtPath:(NSString *)path
-                toPath:(NSString *)otherPath
-                 error:(NSError **)error
-{
-    
-}
-
-#pragma mark Symbolic Links
-
-/*!
- * @abstract Creates a symbolic link.
- * @seealso man symlink(2)
- * @param path The path for the created symbolic link.
- * @param otherPath The path that is the target of the symbolic link.
- * @param error Should be filled with a POSIX error in case of failure.
- * @result YES if the symbolic link was successfully created.
- */
-- (BOOL)createSymbolicLinkAtPath:(NSString *)path 
-             withDestinationPath:(NSString *)otherPath
-                           error:(NSError **)error
-{
-    
-}
-
-/*!
- * @abstract Reads the destination of a symbolic link.
- * @seealso man readlink(2)
- * @param path The path to the specified symlink.
- * @param error Should be filled with a POSIX error in case of failure.
- * @result The destination path of the symbolic link or nil on error.
- */
-- (NSString *)destinationOfSymbolicLinkAtPath:(NSString *)path
-                                        error:(NSError **)error
-{
-    
-}
-
-#pragma mark Extended Attributes
-
-/*!
- * @abstract Returns the names of the extended attributes at the specified path.
- * @discussion If there are no extended attributes at this path, then return an
- * empty array. Return nil only on error.
- * @seealso man listxattr(2)
- * @param path The path to the specified file.
- * @param error Should be filled with a POSIX error in case of failure.
- * @result An NSArray of extended attribute names or nil on error.
- */
-- (NSArray *)extendedAttributesOfItemAtPath:path
-                                      error:(NSError **)error
-{
-    
-}
-
-/*!
- * @abstract Returns the contents of the extended attribute at the specified path.
- * @seealso man getxattr(2)
- * @param name The name of the extended attribute.
- * @param path The path to the specified file.
- * @param position The offset within the attribute to read from.
- * @param error Should be filled with a POSIX error in case of failure.
- * @result The data corresponding to the attribute or nil on error.
- */
-- (NSData *)valueOfExtendedAttribute:(NSString *)name
-                        ofItemAtPath:(NSString *)path
-                            position:(off_t)position
-                               error:(NSError **)error
-{
-    
-}
-
-/*!
- * @abstract Writes the contents of the extended attribute at the specified path.
- * @seealso man setxattr(2)
- * @param name The name of the extended attribute.
- * @param path The path to the specified file.
- * @param value The data to write.
- * @param position The offset within the attribute to write to
- * @param options Options (see setxattr man page).
- * @param error Should be filled with a POSIX error in case of failure.
- * @result YES if the attribute was successfully written.
- */
-- (BOOL)setExtendedAttribute:(NSString *)name
-                ofItemAtPath:(NSString *)path
-                       value:(NSData *)value
-                    position:(off_t)position
-                     options:(int)options
-                       error:(NSError **)error
-{
-    
-}
-
-/*!
- * @abstract Removes the extended attribute at the specified path.
- * @seealso man removexattr(2)
- * @param name The name of the extended attribute.
- * @param path The path to the specified file.
- * @param error Should be filled with a POSIX error in case of failure.
- * @result YES if the attribute was successfully removed.
- */
-- (BOOL)removeExtendedAttribute:(NSString *)name
-                   ofItemAtPath:(NSString *)path
-                          error:(NSError **)error
-{
-    
-}
 
 
 #pragma mark- CLAPI callbacks

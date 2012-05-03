@@ -30,12 +30,12 @@
 @property (nonatomic) BOOL isCachedToDisk;
 @property (nonatomic) BOOL isCachedInMemory;
 
-- (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path;
-
 /**
  * Create a file locally for upload.
  */
 - (NimbusFile *) initWithName:(NSString*)aName andCachePath:(NSString*)aPath;
+- (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path;
+
 - (void) download;
 - (void) cacheToMemory;
 - (void) renameInCache:(NSString *)newname;

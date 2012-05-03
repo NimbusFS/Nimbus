@@ -125,6 +125,8 @@
     [_descriptionLabel setAttributedStringValue:string];
     [_loginFailedLabel setHidden:YES];
     [_loginProgressIndicator setHidden:YES];
+    
+    [_window makeKeyAndOrderFront:self];
 }
 
 -(void) mount:(id)selector

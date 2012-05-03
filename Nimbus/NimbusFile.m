@@ -38,7 +38,7 @@
     itsCLWebItem = [[CLWebItem alloc] initWithName:aName];
     itsCachePath = aPath;
     itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", itsCachePath, aName];
-    isCachedToDisk = YES;
+    isCachedToDisk = NO;
     isCachedInMemory = NO;
     return self;
 }

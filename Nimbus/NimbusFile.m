@@ -16,12 +16,26 @@
 @synthesize isCachedToDisk;
 @synthesize isCachedInMemory;
 @synthesize data;
+- (NSFileHandle*) fileHandle
+{
+    if (itsFileHandle == nil) {
+        itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
+        if(itsFileHandle == nil) {
+            // Then the file must not exist yet
+            [[NSFileManager defaultManager] createFileAtPath:itsDiskPath contents:nil attributes:nil];
+            currentOffset = 0ULL;
+            itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
+        }
+    }
+    return [itsFileHandle retain];
+}
 
 - (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path
 {
     self = [super init];
     if (!self) return nil;
     
+    itsFileHandle = nil;
     itsCLWebItem = [webItem retain];
     itsCachePath = [path retain];
     itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", path, [[webItem name] lastPathComponent]];
@@ -35,10 +49,11 @@
     self = [super init];
     if (!self) return nil;
     
+    itsFileHandle = nil;
     itsCLWebItem = [[CLWebItem alloc] initWithName:aName];
     itsCachePath = aPath;
     itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", itsCachePath, aName];
-    isCachedToDisk = NO;
+    isCachedToDisk = YES; // A valid file handle can be opened without downloading first
     isCachedInMemory = NO;
     return self;
 }
@@ -94,26 +109,15 @@
 {
     // download from the URL at clWebItem.remoteURL
     // and save it to path/clWebItem.name
-    itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
-    if (itsFileHandle == nil)
-    {
-        [[NSFileManager defaultManager] createFileAtPath:itsDiskPath contents:nil attributes:nil];
-        itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[itsCLWebItem remoteURL] 
+                                         cachePolicy:NSURLRequestUseProtocolCachePolicy 
+                                     timeoutInterval:60.0];
+    
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
         
-        [itsFileHandle retain];
-        currentOffset = 0ULL;
-            
-        NSURLRequest *req = [NSURLRequest requestWithURL:[itsCLWebItem remoteURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-        NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
-        
-        if (!conn)
-        {
-            NSLog(@"Failed to connect to remote URL! (%@)", [itsCLWebItem remoteURL]);
-        }
-    }
-    else
+    if (!conn)
     {
-        isCachedToDisk = YES;
+        NSLog(@"Failed to connect to remote URL! (%@)", [itsCLWebItem remoteURL]);
     }
 }
 
@@ -130,8 +134,8 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)theData
 {
-    [itsFileHandle seekToFileOffset:currentOffset];
-    [itsFileHandle writeData:theData];
+    [self.fileHandle seekToFileOffset:currentOffset];
+    [self.fileHandle writeData:theData];
     currentOffset += [theData length];
 }
 
@@ -142,6 +146,8 @@
     
     // close the file
     [itsFileHandle closeFile];
+    [itsFileHandle release];
+    itsFileHandle = nil;
     
     // mark that this NimbusFile is cached
     isCachedToDisk = YES;

@@ -191,7 +191,6 @@
  */
 - (NSDictionary *)attributesOfItemAtPath:(NSString *)path userData:(id)userData error:(NSError **)error
 {
-    NSLog(@"Attributes of item at path %@", path);
     if (!path)
     {
         if (error)
@@ -427,7 +426,22 @@
                 offset:(off_t)offset
                  error:(NSError **)error
 {
-    NSLog(@"Writefileatpath %@", path);
+    // Find the nimbus file
+    NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
+    if (nf == nil) {
+        *error = [NSError errorWithPOSIXCode:ENOENT];
+        return -1;
+    }
+    // Get da handle and seek to the offset
+    NSFileHandle *file = nf.fileHandle;
+    [file seekToFileOffset:offset];
+    
+    // Write data
+    NSData *data = [[NSData alloc] initWithBytes:buffer length:size];
+    [file writeData:data];
+    [data release];
+    
+    return size;
 }
 
 /*!

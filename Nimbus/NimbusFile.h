@@ -36,6 +36,8 @@
 - (NimbusFile *) initWithName:(NSString*)aName andCachePath:(NSString*)aPath;
 - (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path;
 
+- (NSFileHandle*) fileHandle;
+
 - (void) download;
 - (void) cacheToMemory;
 - (void) renameInCache:(NSString *)newname;

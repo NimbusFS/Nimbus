@@ -30,6 +30,19 @@
     return self;
 }
 
+- (NimbusFile*) initWithName:(NSString*)aName andCachePath:(NSString*)aPath
+{
+    self = [super init];
+    if (!self) return nil;
+    
+    itsCLWebItem = [[CLWebItem alloc] initWithName:aName];
+    itsCachePath = aPath;
+    itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", itsCachePath, aName];
+    isCachedToDisk = YES;
+    isCachedInMemory = NO;
+    return self;
+}
+
 #pragma Caching
 - (void) cacheToMemory
 {

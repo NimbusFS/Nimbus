@@ -31,6 +31,11 @@
 @property (nonatomic) BOOL isCachedInMemory;
 
 - (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path;
+
+/**
+ * Create a file locally for upload.
+ */
+- (NimbusFile *) initWithName:(NSString*)aName andCachePath:(NSString*)aPath;
 - (void) download;
 - (void) cacheToMemory;
 - (void) renameInCache:(NSString *)newname;

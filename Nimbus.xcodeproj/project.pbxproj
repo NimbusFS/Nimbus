@@ -18,15 +18,15 @@
 		1B7F4AFE14DB61A5002D1B93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */; };
 		1B7F4B0114DB61A6002D1B93 /* NimbusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F4AFF14DB61A6002D1B93 /* NimbusView.xib */; };
 		1B7F4B0B14DB61E8002D1B93 /* OSXFUSE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4B0A14DB61E8002D1B93 /* OSXFUSE.framework */; };
-		1B7F4B1014DB6272002D1B93 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F4B0F14DB6272002D1B93 /* libCloud.a */; };
 		1B7F4B1F14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */; };
 		1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */; };
+		83160B5B15520AA2008195D1 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83160B5A155209A3008195D1 /* libCloud.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1B6436E714FC16FE007EAD05 /* PBXContainerItemProxy */ = {
+		83160B59155209A3008195D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1B6436E014FC16FE007EAD05 /* Cloud.xcodeproj */;
+			containerPortal = 83160B55155209A3008195D1 /* Cloud.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 4B1AB184130B69B900BD6A95;
 			remoteInfo = Cloud;
@@ -37,24 +37,9 @@
 		1B01DE741531647C0017B737 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1B01DE76153165630017B737 /* NSAttributedString+Hyperlink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Hyperlink.h"; sourceTree = "<group>"; };
 		1B01DE77153165630017B737 /* NSAttributedString+Hyperlink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Hyperlink.m"; sourceTree = "<group>"; };
-		1B041F3A14DFE95200816C01 /* Cloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cloud.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Cloud.h"; sourceTree = "<group>"; };
-		1B041F3B14DFE95200816C01 /* CLAPIEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPIEngine.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/CLAPIEngine.h"; sourceTree = "<group>"; };
-		1B041F3C14DFE96500816C01 /* CLWebItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLWebItem.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Model/CLWebItem.h"; sourceTree = "<group>"; };
-		1B041F3D14DFE9A900816C01 /* CLAPIDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPIDeserializer.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/API Parsing/CLAPIDeserializer.h"; sourceTree = "<group>"; };
-		1B041F3E14DFE9A900816C01 /* CLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPISerializer.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/API Parsing/CLAPISerializer.h"; sourceTree = "<group>"; };
-		1B041F3F14DFE9A900816C01 /* NSMutableURLRequest+NPPOSTBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableURLRequest+NPPOSTBody.h"; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Categories/NSMutableURLRequest+NPPOSTBody.h"; sourceTree = "<group>"; };
-		1B041F4014DFE9A900816C01 /* NSString+NPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NPAdditions.h"; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Categories/NSString+NPAdditions.h"; sourceTree = "<group>"; };
-		1B041F4114DFE9A900816C01 /* NSString+NPMimeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NPMimeType.h"; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Categories/NSString+NPMimeType.h"; sourceTree = "<group>"; };
-		1B041F4214DFE9A900816C01 /* CLAPIEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPIEngine.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/CLAPIEngine.h"; sourceTree = "<group>"; };
-		1B041F4314DFE9A900816C01 /* CLAPIEngineConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPIEngineConstants.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/CLAPIEngineConstants.h"; sourceTree = "<group>"; };
-		1B041F4414DFE9A900816C01 /* CLAPIEngineDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPIEngineDelegate.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/CLAPIEngineDelegate.h"; sourceTree = "<group>"; };
-		1B041F4514DFE9A900816C01 /* CLAPITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPITransaction.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/CLAPITransaction.h"; sourceTree = "<group>"; };
-		1B041F4614DFE9A900816C01 /* CLAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAccount.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Model/CLAccount.h"; sourceTree = "<group>"; };
-		1B041F4714DFE9A900816C01 /* CLSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLSocket.h; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud/Model/CLSocket.h"; sourceTree = "<group>"; };
 		1B24960D14EB9B49007F8166 /* NSError+POSIX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+POSIX.h"; sourceTree = "<group>"; };
 		1B24960E14EB9B49007F8166 /* NSError+POSIX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+POSIX.m"; sourceTree = "<group>"; };
 		1B42176D14F97E9300E95F2F /* Nimbus.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Nimbus.icns; sourceTree = "<group>"; };
-		1B6436E014FC16FE007EAD05 /* Cloud.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cloud.xcodeproj; path = "../../3rdparty/cloud-app-obj-c/Source/libCloud/Cloud.xcodeproj"; sourceTree = "<group>"; };
 		1B7F4AE614DB61A5002D1B93 /* Nimbus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nimbus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B7F4AEA14DB61A5002D1B93 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1B7F4AED14DB61A5002D1B93 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -69,11 +54,11 @@
 		1B7F4AFD14DB61A5002D1B93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1B7F4B0014DB61A6002D1B93 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NimbusView.xib; sourceTree = "<group>"; };
 		1B7F4B0A14DB61E8002D1B93 /* OSXFUSE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSXFUSE.framework; path = Library/Frameworks/OSXFUSE.framework; sourceTree = SDKROOT; };
-		1B7F4B0F14DB6272002D1B93 /* libCloud.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCloud.a; path = "../../../../Library/Developer/Xcode/DerivedData/Nimbus-ddkbencdxnknxlanrbpwpfouqfqs/Build/Products/Debug/libCloud.a"; sourceTree = "<group>"; };
 		1B7F4B1D14DB6EB1002D1B93 /* NimbusFUSEFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusFUSEFileSystem.h; sourceTree = "<group>"; };
 		1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NimbusFUSEFileSystem.m; sourceTree = "<group>"; };
 		1BC9A27314DFBA2B00A7B9FE /* NimbusFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusFile.h; sourceTree = "<group>"; };
 		1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NimbusFile.m; sourceTree = "<group>"; };
+		83160B55155209A3008195D1 /* Cloud.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cloud.xcodeproj; path = "cloud-app-obj-c/Source/libCloud/Cloud.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B7F4B1014DB6272002D1B93 /* libCloud.a in Frameworks */,
+				83160B5B15520AA2008195D1 /* libCloud.a in Frameworks */,
 				1B01DE751531647C0017B737 /* Security.framework in Frameworks */,
 				1B7F4B0B14DB61E8002D1B93 /* OSXFUSE.framework in Frameworks */,
 				1B7F4AEB14DB61A5002D1B93 /* Cocoa.framework in Frameworks */,
@@ -103,41 +88,11 @@
 			path = Nimbus;
 			sourceTree = "<group>";
 		};
-		1B041F3914DFE93400816C01 /* Indexing headers */ = {
-			isa = PBXGroup;
-			children = (
-				1B041F3D14DFE9A900816C01 /* CLAPIDeserializer.h */,
-				1B041F3E14DFE9A900816C01 /* CLAPISerializer.h */,
-				1B041F3F14DFE9A900816C01 /* NSMutableURLRequest+NPPOSTBody.h */,
-				1B041F4014DFE9A900816C01 /* NSString+NPAdditions.h */,
-				1B041F4114DFE9A900816C01 /* NSString+NPMimeType.h */,
-				1B041F4214DFE9A900816C01 /* CLAPIEngine.h */,
-				1B041F4314DFE9A900816C01 /* CLAPIEngineConstants.h */,
-				1B041F4414DFE9A900816C01 /* CLAPIEngineDelegate.h */,
-				1B041F4514DFE9A900816C01 /* CLAPITransaction.h */,
-				1B041F4614DFE9A900816C01 /* CLAccount.h */,
-				1B041F4714DFE9A900816C01 /* CLSocket.h */,
-				1B041F3C14DFE96500816C01 /* CLWebItem.h */,
-				1B041F3A14DFE95200816C01 /* Cloud.h */,
-				1B041F3B14DFE95200816C01 /* CLAPIEngine.h */,
-			);
-			name = "Indexing headers";
-			sourceTree = "<group>";
-		};
-		1B6436E114FC16FE007EAD05 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1B6436E814FC16FE007EAD05 /* libCloud.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		1B7F4ADB14DB61A5002D1B93 = {
 			isa = PBXGroup;
 			children = (
-				1B6436E014FC16FE007EAD05 /* Cloud.xcodeproj */,
+				83160B55155209A3008195D1 /* Cloud.xcodeproj */,
 				1B01DE7915316A190017B737 /* Categories */,
-				1B041F3914DFE93400816C01 /* Indexing headers */,
 				1B7F4AF014DB61A5002D1B93 /* Nimbus */,
 				1B7F4AE914DB61A5002D1B93 /* Frameworks */,
 				1B7F4AE714DB61A5002D1B93 /* Products */,
@@ -184,7 +139,6 @@
 		1B7F4AF114DB61A5002D1B93 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1B7F4B0F14DB6272002D1B93 /* libCloud.a */,
 				1B7F4AF614DB61A5002D1B93 /* main.m */,
 				1B7F4AF814DB61A5002D1B93 /* Nimbus-Prefix.pch */,
 				1B7F4AF214DB61A5002D1B93 /* Nimbus-Info.plist */,
@@ -200,6 +154,14 @@
 				1B42176D14F97E9300E95F2F /* Nimbus.icns */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		83160B56155209A3008195D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83160B5A155209A3008195D1 /* libCloud.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,8 +204,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 1B6436E114FC16FE007EAD05 /* Products */;
-					ProjectRef = 1B6436E014FC16FE007EAD05 /* Cloud.xcodeproj */;
+					ProductGroup = 83160B56155209A3008195D1 /* Products */;
+					ProjectRef = 83160B55155209A3008195D1 /* Cloud.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -254,11 +216,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1B6436E814FC16FE007EAD05 /* libCloud.a */ = {
+		83160B5A155209A3008195D1 /* libCloud.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libCloud.a;
-			remoteRef = 1B6436E714FC16FE007EAD05 /* PBXContainerItemProxy */;
+			remoteRef = 83160B59155209A3008195D1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

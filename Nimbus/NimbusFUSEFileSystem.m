@@ -200,52 +200,26 @@
     }
     
     @synchronized(self)
-    {
-        NSDate *creationDate;
-        NSDate *modificationDate;
-        
-        int mode = 0700;
-        BOOL isDirectory = NO;
-        
+    {        
         if ([path isEqualToString:@"/"])
         {
-            isDirectory = YES;
-            creationDate = [NSDate date];
-            modificationDate = [NSDate date];
+            NSMutableDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithInt:0700], NSFilePosixPermissions,
+                                         [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
+                                         [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
+                                         [NSDate date], NSFileCreationDate,
+                                         [NSDate date], NSFileModificationDate,
+                                         NSFileTypeDirectory, NSFileType,
+                                         nil];
+            return attr;
         } else {
             NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
             
             if (file == nil)
                 return nil;
             
-            CLWebItem *item = file.itsCLWebItem;
-            creationDate = [item createdAt];
-            modificationDate = [item updatedAt];
-            
-            if(creationDate == nil)
-                creationDate = [NSDate date];
-            
-            if(modificationDate == nil)
-                modificationDate = [NSDate date];
+            return [file attributes];
         }
-        
-        NSMutableDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSNumber numberWithInt:0] , NSFileSize,
-                                     [NSNumber numberWithInt:mode], NSFilePosixPermissions,
-                                     [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
-                                     [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
-                                     creationDate, NSFileCreationDate,
-                                     modificationDate, NSFileModificationDate,
-                                     (isDirectory ? NSFileTypeDirectory : NSFileTypeRegular), NSFileType,
-                                     nil];
-        
-        if (!attr)
-        {
-            if (error)
-                *error = [NSError errorWithPOSIXCode:ENOENT];
-            NSLog(@"Attrs not set!");
-        }
-        return attr;
     }
 }
 
@@ -306,7 +280,23 @@
              userData:(id)userData
                 error:(NSError **)error
 {
-    NSLog(@"SetATtributes");
+    @synchronized(self) {
+        NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
+        if (file == nil) {
+            NSLog(@"File not found!");
+            *error = [NSError errorWithPOSIXCode:ENOENT];
+            return NO;
+        }
+        
+        if ([file isCachedToDisk]) {
+            [[NSFileManager defaultManager] setAttributes:attributes ofItemAtPath:[file itsDiskPath] error:error];
+        } else {
+            NSLog(@"File wasn't cached!");
+            return NO;
+        }
+        
+        return YES;
+    }
 }
 
 #pragma mark File Contents
@@ -322,7 +312,6 @@
  */
 - (NSData *)contentsAtPath:(NSString *)path
 {
-    NSLog(@"Contents at path %@", path);
     @synchronized(self)
     {
         if ( [cloudFiles objectForKey:[path lastPathComponent]] == nil )
@@ -651,7 +640,9 @@
             if ([cloudFiles objectForKey:[item name]] == nil)
             {
                 NimbusFile *theFile = [[NimbusFile alloc] initWithWebItem:item andCachePath:cachePath];
-                [theFile download];
+                if (![theFile isCachedToDisk]) {
+                    [theFile download];
+                }
                 [cloudFiles setObject:theFile forKey:[item name]];
             }
         }

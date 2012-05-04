@@ -29,6 +29,16 @@
     }
     return [itsFileHandle retain];
 }
+- (NSDictionary*) attributes 
+{
+    // Get file size
+    NSDictionary *cacheAttr = [[NSFileManager defaultManager] attributesOfItemAtPath:itsDiskPath
+                                                                               error:nil];
+    unsigned long long fileSize = [[cacheAttr objectForKey:NSFileSize] unsignedLongLongValue];        
+    
+    [itsAttributes setObject: [NSNumber numberWithUnsignedLongLong:fileSize] forKey:NSFileSize];
+    return itsAttributes;
+}
 
 - (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path
 {
@@ -39,8 +49,26 @@
     itsCLWebItem = [webItem retain];
     itsCachePath = [path retain];
     itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", path, [[webItem name] lastPathComponent]];
-    isCachedToDisk = NO;
+    
+    // TODO: Check mtimes
+    if ([[NSFileManager defaultManager] fileExistsAtPath:itsDiskPath]) {
+        isCachedToDisk = YES;
+    } else {
+        isCachedToDisk = NO;
+    }
+    
     isCachedInMemory = NO;
+    
+    itsAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys: 
+                     [NSNumber numberWithUnsignedLongLong:0], NSFileSize, 
+                     [NSNumber numberWithInt:0700], NSFilePosixPermissions, 
+                     [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
+                     [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
+                     [itsCLWebItem createdAt], NSFileCreationDate,
+                     [itsCLWebItem updatedAt], NSFileModificationDate,
+                     NSFileTypeRegular, NSFileType,
+                     nil];
+    
     return self;
 }
 
@@ -55,6 +83,17 @@
     itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", itsCachePath, aName];
     isCachedToDisk = YES; // A valid file handle can be opened without downloading first
     isCachedInMemory = NO;
+    
+    itsAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys: 
+                     [NSNumber numberWithUnsignedLongLong:0], NSFileSize, 
+                     [NSNumber numberWithInt:0700], NSFilePosixPermissions, 
+                     [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
+                     [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
+                     [NSDate date], NSFileCreationDate,
+                     [NSDate date], NSFileModificationDate,
+                     NSFileTypeRegular, NSFileType,
+                     nil];
+    
     return self;
 }
 
@@ -88,7 +127,7 @@
     filemgr = [NSFileManager defaultManager];
     
     if ([filemgr removeItemAtPath:itsDiskPath error:nil]  == YES)
-        isCachedToDisk = NO;
+        self.isCachedToDisk = NO;
 }
 
 - (void) renameInCache:(NSString *)newname
@@ -150,7 +189,7 @@
     itsFileHandle = nil;
     
     // mark that this NimbusFile is cached
-    isCachedToDisk = YES;
+    self.isCachedToDisk = YES;
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -169,6 +208,7 @@
     
     [itsCLWebItem release];
     [itsDiskPath release];
+    [itsAttributes release];
     
     [super dealloc];
 }

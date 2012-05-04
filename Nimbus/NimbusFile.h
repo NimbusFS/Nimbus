@@ -17,6 +17,7 @@
     NSData* data;
     BOOL isCachedToDisk;
     BOOL isCachedInMemory;
+    NSMutableDictionary *itsAttributes;
 
     NSFileHandle *itsFileHandle;
     unsigned long long currentOffset;
@@ -27,8 +28,9 @@
 @property (retain, nonatomic) NSString *itsDiskPath;
 @property (retain, nonatomic) NSString *itsCachePath;
 @property (retain, nonatomic) NSData* data;
-@property (nonatomic) BOOL isCachedToDisk;
-@property (nonatomic) BOOL isCachedInMemory;
+@property (retain, nonatomic) NSMutableDictionary* itsAttributes;
+@property (atomic) BOOL isCachedToDisk;
+@property (atomic) BOOL isCachedInMemory;
 
 /**
  * Create a file locally for upload.
@@ -37,6 +39,7 @@
 - (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path;
 
 - (NSFileHandle*) fileHandle;
+- (NSDictionary*) attributes;
 
 - (void) download;
 - (void) cacheToMemory;

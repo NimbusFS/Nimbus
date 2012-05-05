@@ -29,12 +29,12 @@
     }
     return [itsFileHandle retain];
 }
-- (NSDictionary*) attributes 
+- (NSMutableDictionary*) attributes 
 {
     // Get file size
     NSDictionary *cacheAttr = [[NSFileManager defaultManager] attributesOfItemAtPath:itsDiskPath
                                                                                error:nil];
-    unsigned long long fileSize = [[cacheAttr objectForKey:NSFileSize] unsignedLongLongValue];        
+    unsigned long long fileSize = [[cacheAttr objectForKey:NSFileSize] unsignedLongLongValue];
     
     [itsAttributes setObject: [NSNumber numberWithUnsignedLongLong:fileSize] forKey:NSFileSize];
     return itsAttributes;
@@ -81,6 +81,8 @@
     itsCLWebItem = [[CLWebItem alloc] initWithName:aName];
     itsCachePath = aPath;
     itsDiskPath = [[NSString alloc] initWithFormat:@"%@/%@", itsCachePath, aName];
+    [[NSFileManager defaultManager] createFileAtPath:itsDiskPath contents:nil attributes:nil];
+    
     isCachedToDisk = YES; // A valid file handle can be opened without downloading first
     isCachedInMemory = NO;
     
@@ -100,6 +102,7 @@
 #pragma Caching
 - (void) cacheToMemory
 {
+    // TODO check mtimes
     if ( !isCachedInMemory )
     {
         data = [[NSData alloc] initWithContentsOfFile:itsDiskPath];

@@ -39,7 +39,7 @@
 - (NimbusFile *) initWithWebItem:(CLWebItem *)webItem andCachePath:(NSString *)path;
 
 - (NSFileHandle*) fileHandle;
-- (NSDictionary*) attributes;
+- (NSMutableDictionary*) attributes;
 
 - (void) download;
 - (void) cacheToMemory;

@@ -289,9 +289,12 @@
         }
         
         if ([file isCachedToDisk]) {
-            [[NSFileManager defaultManager] setAttributes:attributes ofItemAtPath:[file itsDiskPath] error:error];
+            [[file attributes] addEntriesFromDictionary:attributes];
+            NSLog(@"Set attributes: %@" , attributes);
+            return YES;
         } else {
             NSLog(@"File wasn't cached!");
+            *error = [NSError errorWithPOSIXCode:ENOENT];
             return NO;
         }
         
@@ -322,6 +325,7 @@
         NimbusFile *theFile = [cloudFiles objectForKey:[path lastPathComponent]];
         if ([theFile isCachedToDisk])
         {
+            [theFile deleteFromMemory];
             [theFile cacheToMemory];
             return [theFile data];
         }
@@ -389,7 +393,7 @@
                offset:(off_t)offset
                 error:(NSError **)error
 {
-    NSLog(@"Write at path %@", path);
+    NSLog(@"Read at path %@", path);
     return -1;
 }
 
@@ -415,6 +419,7 @@
                 offset:(off_t)offset
                  error:(NSError **)error
 {
+    NSLog(@"Write to path %@", path);
     // Find the nimbus file
     NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
     if (nf == nil) {
@@ -583,6 +588,7 @@
  */
 - (BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error
 {
+    return YES;
     @synchronized(self)
     {
         NSLog(@"Removing...");

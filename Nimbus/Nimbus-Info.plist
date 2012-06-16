@@ -29,7 +29,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012 Sagar Pandya. All rights reserved.</string>
 	<key>NSMainNibFile</key>
-	<string>NimbusView</string>
+	<string>MainWindow</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

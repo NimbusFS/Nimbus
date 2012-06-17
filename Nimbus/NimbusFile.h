@@ -14,9 +14,7 @@
     CLWebItem *itsCLWebItem;
     NSString *itsDiskPath; // path to this file on disk
     NSString *itsCachePath; // path to the directory where this file will live on disk
-    NSData* data;
     BOOL isCachedToDisk;
-    BOOL isCachedInMemory;
     NSMutableDictionary *itsAttributes;
 
     NSFileHandle *itsFileHandle;
@@ -27,10 +25,8 @@
 @property (retain, nonatomic) CLWebItem *itsCLWebItem;
 @property (retain, nonatomic) NSString *itsDiskPath;
 @property (retain, nonatomic) NSString *itsCachePath;
-@property (retain, nonatomic) NSData* data;
 @property (retain, nonatomic) NSMutableDictionary* itsAttributes;
 @property (atomic) BOOL isCachedToDisk;
-@property (atomic) BOOL isCachedInMemory;
 
 /**
  * Create a file locally for upload.
@@ -42,9 +38,7 @@
 - (NSMutableDictionary*) attributes;
 
 - (void) download;
-- (void) cacheToMemory;
 - (void) renameInCache:(NSString *)newname;
-- (void) deleteFromMemory;
 - (void) deleteFromDisk;
 
 @end

@@ -199,20 +199,20 @@
         return nil;
     }
     
-    @synchronized(self)
-    {        
-        if ([path isEqualToString:@"/"])
+    if ([path isEqualToString:@"/"])
+    {
+        NSMutableDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithInt:0700], NSFilePosixPermissions,
+                                     [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
+                                     [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
+                                     [NSDate date], NSFileCreationDate,
+                                     [NSDate date], NSFileModificationDate,
+                                     NSFileTypeDirectory, NSFileType,
+                                     nil];
+        return attr;
+    } else {
+        @synchronized(self)
         {
-            NSMutableDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSNumber numberWithInt:0700], NSFilePosixPermissions,
-                                         [NSNumber numberWithInt:geteuid()], NSFileOwnerAccountID,
-                                         [NSNumber numberWithInt:getegid()], NSFileGroupOwnerAccountID,
-                                         [NSDate date], NSFileCreationDate,
-                                         [NSDate date], NSFileModificationDate,
-                                         NSFileTypeDirectory, NSFileType,
-                                         nil];
-            return attr;
-        } else {
             NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
             
             if (file == nil)
@@ -280,7 +280,8 @@
              userData:(id)userData
                 error:(NSError **)error
 {
-    @synchronized(self) {
+    @synchronized(self)
+    {
         NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
         if (file == nil) {
             NSLog(@"File not found!");
@@ -296,7 +297,6 @@
             *error = [NSError errorWithPOSIXCode:ENOENT];
             return NO;
         }
-        
         return YES;
     }
 }
@@ -324,9 +324,7 @@
         NimbusFile *theFile = [cloudFiles objectForKey:[path lastPathComponent]];
         if ([theFile isCachedToDisk])
         {
-            [theFile deleteFromMemory];
-            [theFile cacheToMemory];
-            return [theFile data];
+            return [[NSData alloc] initWithContentsOfFile:[theFile itsDiskPath]];
         }
         else
         {
@@ -354,7 +352,8 @@
               userData:(id *)userData
                  error:(NSError **)error
 {
-    NSLog(@"Openfileatpath %@", path);
+    NSLog(@"OpenFileAtPath not implemented.");
+    return NO;
 }
 
 /*!
@@ -370,28 +369,26 @@
     // cool, safely assume this file is done being modified and upload it to the cloud
     NSLog(@"ReleaseFileAtPath %@", path);
     
+    // skip resource fork
     if ( [[path lastPathComponent] hasPrefix:@"._"] )
-    {
-        NSLog(@"Skipping resource fork");
         return;
-    }
     
-    // Find the nimbus file
-    NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
-    if (nf == nil)
+    @synchronized(self)
     {
-        NSLog(@"Tried to close() a file that doesn't exist in the Nimbus cache. How did this happen??");
-        return;
-    }
-    
-    NSData *data;
-    if ( [nf isCachedInMemory] )
-        data = [nf data];
-    else
-        data = [[NSData alloc] initWithContentsOfFile:[nf itsDiskPath]];
+        // Find the nimbus file
+        NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
+        if (nf == nil)
+        {
+            NSLog(@"Tried to close() a file that doesn't exist in the Nimbus cache. How did this happen??");
+            return;
+        }
+        
+        // get the data
+        NSData *data = [[NSData alloc] initWithContentsOfFile:[nf itsDiskPath]];
 
-    // upload it to CloudApp 
-    [engine_ uploadFileWithName:[nf.itsCLWebItem name] fileData:data userInfo:nil];
+        // upload it to CloudApp 
+        [engine_ uploadFileWithName:[nf.itsCLWebItem name] fileData:data userInfo:nil];
+    }
 }
 
 /*!
@@ -416,8 +413,24 @@
                offset:(off_t)offset
                 error:(NSError **)error
 {
-    NSLog(@"Read at path %@", path);
-    return -1;
+    NSLog(@"ReadFileAtPath %@", path);
+    
+    @synchronized(self)
+    {
+        NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
+        if (nf == nil)
+        {
+            *error = [NSError errorWithPOSIXCode:ENOENT];
+            return -1;
+        }
+        
+        // if this line fails it's probably because [nf filehandle] returns
+        // a handle for writing... replace with a read filehandle inline
+        NSFileHandle *file = nf.fileHandle;
+        [file seekToFileOffset:offset];
+        buffer = (char*)[[file readDataOfLength:size] bytes];
+        return (int)size;
+    }
 }
 
 /*!
@@ -443,22 +456,28 @@
                  error:(NSError **)error
 {
     NSLog(@"Write to path %@", path);
-    // Find the nimbus file
-    NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
-    if (nf == nil) {
-        *error = [NSError errorWithPOSIXCode:ENOENT];
-        return -1;
+    
+    @synchronized(self)
+    {
+        // Find the nimbus file
+        NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
+        if (nf == nil)
+        {
+            *error = [NSError errorWithPOSIXCode:ENOENT];
+            return -1;
+        }
+        
+        // Get da handle and seek to the offset
+        NSFileHandle *file = nf.fileHandle;
+        [file seekToFileOffset:offset];
+        
+        // Write data
+        NSData *data = [[NSData alloc] initWithBytes:buffer length:size];
+        [file writeData:data];
+        [data release];
+        
+        return (int)size;
     }
-    // Get da handle and seek to the offset
-    NSFileHandle *file = nf.fileHandle;
-    [file seekToFileOffset:offset];
-    
-    // Write data
-    NSData *data = [[NSData alloc] initWithBytes:buffer length:size];
-    [file writeData:data];
-    [data release];
-    
-    return (int)size;
 }
 
 /*!
@@ -474,7 +493,8 @@
                   withItemAtPath:(NSString *)path2
                            error:(NSError **)error
 {
-    NSLog(@"ExchangeDataofitematpathwithitematpath");
+    NSLog(@"ExchangeDataOfItemAtPathWithItemAtPath not implemented.");
+    return NO;
 }
 
 #pragma mark Creating an Item
@@ -492,7 +512,7 @@
                    attributes:(NSDictionary *)attributes
                         error:(NSError **)error
 {
-    NSLog(@"Create Directory at Path %@", path);
+    NSLog(@"CreateDirectoryAtPath not implemented.");
     return NO;
 }
 
@@ -514,28 +534,27 @@
                 userData:(id *)userData 
                    error:(NSError **)error
 {
-    if ([path isEqualToString:@"/.DS_Store"])
-    {
+    if ([path isEqualToString:@"/.DS_Store"] || [[path lastPathComponent] hasPrefix:@"._"])
         return NO;
-    }
-    
-    NSLog(@"Adding file %@", path);
-    
-    if ([cloudFiles objectForKey:[path lastPathComponent]])
+
+    @synchronized(self)
     {
-        // File exists!
-        *error = [[NSError alloc] initWithDomain:NSPOSIXErrorDomain 
-                                            code:EEXIST 
-                                        userInfo:nil];
-        return NO;
+        if ([cloudFiles objectForKey:[path lastPathComponent]])
+        {
+            // File exists!
+            *error = [[NSError alloc] initWithDomain:NSPOSIXErrorDomain 
+                                                code:EEXIST 
+                                            userInfo:nil];
+            return NO;
+        }
+        
+        NimbusFile *nf = [[NimbusFile alloc] initWithName:[path lastPathComponent] 
+                                             andCachePath:cachePath];    
+        [cloudFiles setObject:nf forKey:[nf.itsCLWebItem name]];
+        
+        NSLog(@"%@", @"File created locally.");
+        return YES;
     }
-    
-    NimbusFile *nf = [[NimbusFile alloc] initWithName:[path lastPathComponent] 
-                                         andCachePath:cachePath];    
-    [cloudFiles setObject:nf forKey:[nf.itsCLWebItem name]];
-    
-    NSLog(@"%@", @"File created locally.");
-    return YES;
 }
 
 #pragma mark Moving an Item
@@ -553,17 +572,17 @@
  */
 - (BOOL)moveItemAtPath:(NSString *)source toPath:(NSString *)destination error:(NSError **)error
 {
+    NSLog(@"moveItemAtPath %@ -> %@", source, destination);
+
     @synchronized(self)
     {
-        NSLog(@"Renaming...");
         NSString *newname = [destination lastPathComponent];
-        
         NimbusFile *file = [cloudFiles objectForKey:[source lastPathComponent]];
         CLWebItem *item = [[file itsCLWebItem] retain];
         
         if (item == nil)
         {
-            NSLog(@"Item is nil");
+            NSLog(@"Source item is nil");
             return NO;
         }
         
@@ -584,7 +603,6 @@
     }
 }
 
-
 #pragma mark Removing an Item
 
 /*!
@@ -599,7 +617,8 @@
  */
 - (BOOL)removeDirectoryAtPath:(NSString *)path error:(NSError **)error
 {
-    NSLog(@"RemoveDirectoryAtPath");
+    NSLog(@"RemoveDirectoryAtPath not implemented.");
+    return NO;
 }
 
 /*!
@@ -614,10 +633,10 @@
  */
 - (BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error
 {
-    // is this @synchronized necessary?
+    NSLog(@"removeItemAtPath %@", path);
+    
     @synchronized(self)
     {
-        NSLog(@"Removing...");
         NimbusFile *file = [cloudFiles objectForKey:[path lastPathComponent]];
         CLWebItem *item = [file itsCLWebItem];
         
@@ -628,7 +647,8 @@
         }
         
         [engine_ deleteItem:item userInfo:nil];
-        [cloudFiles removeObjectForKey:[path lastPathComponent]];
+
+            [cloudFiles removeObjectForKey:[path lastPathComponent]];
         [file dealloc];
         return YES;
     }
@@ -643,6 +663,7 @@
 -(void) itemUpdateDidSucceed:(CLWebItem *)resultItem connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
     // cool
+    NSLog(@"Item update succeeded.");
 }
 
 -(void) itemDeletionDidSucceed:(CLWebItem *)resultItem connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
@@ -658,22 +679,22 @@
 
 -(void) fileUploadDidSucceedWithResultingItem:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
-    NSLog(@"Hey upload complete!");
+    NSLog(@"Upload complete!");
 }
 
 - (void)itemListRetrievalSucceeded:(NSArray *)items connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
+    if ( [items count] == 0 )
+    {
+        hasMorePages = NO;
+        return;
+    }
+    
+    if ( [items count] < 10 )
+        hasMorePages = NO;
+    
     @synchronized(self)
     {
-        if ( [items count] == 0 )
-        {
-            hasMorePages = NO;
-            return;
-        }
-        
-        if ( [items count] < 10 )
-            hasMorePages = NO;
-        
         // get the data from these pages
         for (CLWebItem *item in items)
         {
@@ -686,11 +707,11 @@
                 [cloudFiles setObject:theFile forKey:[item name]];
             }
         }
-        whichPage++;
-        
-        if ( hasMorePages )
-            [self getNextPage];
     }
+    whichPage++;
+    
+    if ( hasMorePages )
+        [self getNextPage];
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {

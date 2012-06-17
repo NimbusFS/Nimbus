@@ -14,8 +14,6 @@
 @synthesize itsDiskPath;
 @synthesize itsCachePath;
 @synthesize isCachedToDisk;
-@synthesize isCachedInMemory;
-@synthesize data;
 
 - (NSFileHandle*) fileHandle
 {
@@ -60,8 +58,6 @@
         isCachedToDisk = NO;
     }
     
-    isCachedInMemory = NO;
-    
     itsAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys: 
                      [NSNumber numberWithUnsignedLongLong:0], NSFileSize, 
                      [NSNumber numberWithInt:0700], NSFilePosixPermissions, 
@@ -87,8 +83,6 @@
     [[NSFileManager defaultManager] createFileAtPath:itsDiskPath contents:nil attributes:nil];
     
     isCachedToDisk = YES; // A valid file handle can be opened without downloading first
-    isCachedInMemory = NO;
-    
     itsAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys: 
                      [NSNumber numberWithUnsignedLongLong:0], NSFileSize, 
                      [NSNumber numberWithInt:0700], NSFilePosixPermissions, 
@@ -103,26 +97,6 @@
 }
 
 #pragma Caching
-- (void) cacheToMemory
-{
-    // TODO check mtimes
-    if ( !isCachedInMemory )
-    {
-        data = [[NSData alloc] initWithContentsOfFile:itsDiskPath];
-        isCachedInMemory = YES;
-    }
-}
-
-- (void) deleteFromMemory
-{
-    if (!isCachedInMemory)
-        return;
-    
-    [data release];
-    data = nil;
-    isCachedInMemory = NO;
-}
-
 - (void) deleteFromDisk
 {
     if (!isCachedToDisk)
@@ -209,7 +183,6 @@
 
 - (void) dealloc
 {
-    [self deleteFromMemory];
     [self deleteFromDisk];
     
     [itsCLWebItem release];

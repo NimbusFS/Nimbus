@@ -14,6 +14,10 @@
 
 @implementation MainWindowController
 
+@synthesize hdDisabledImage = _hdDisabledImage;
+@synthesize hdEnabledImage = _hdEnabledImage;
+
+@synthesize hdImage = _hdImage;
 @synthesize mountButton = _mountButton;
 @synthesize usernameField = _usernameField;
 @synthesize passwordField = _passwordField;
@@ -21,12 +25,16 @@
 @synthesize loginProgressIndicator = _loginProgressIndicator;
 @synthesize creditsField = _creditsField;
 
-
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
+        // Initialize the images
+        NSString *hdDisabledImageFile = [NSBundle.mainBundle pathForResource:@"NimbusIconDisabled" ofType:@"png"];
+        self.hdDisabledImage = [[NSImage alloc] initWithContentsOfFile: hdDisabledImageFile];
+        
+        NSString *hdEnabledImageFile = [NSBundle.mainBundle pathForResource:@"Nimbus" ofType:@"icns"];
+        self.hdEnabledImage = [[NSImage alloc] initWithContentsOfFile:hdEnabledImageFile];
     }
     
     return self;
@@ -170,6 +178,8 @@
 }
 
 - (void)didMount:(NSNotification *)notification {
+    // Change the image
+    [self.hdImage setImage:self.hdEnabledImage];
     NSDictionary* userInfo = [notification userInfo];
     NSString* mountPath = [userInfo objectForKey:kGMUserFileSystemMountPathKey];
     NSString* parentPath = [mountPath stringByDeletingLastPathComponent];
@@ -178,6 +188,7 @@
 }
 
 - (void)didUnmount:(NSNotification*)notification {
+    [self.hdImage setImage:self.hdDisabledImage];
     [_usernameField setEnabled:YES];
     [_passwordField setEnabled:YES];
     [_mountButton setEnabled:YES];

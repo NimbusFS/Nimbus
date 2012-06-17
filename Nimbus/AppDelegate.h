@@ -15,6 +15,6 @@
     MainWindowController *window;
 }
 
-@property (assign) IBOutlet NSWindow *window;
+@property (retain,nonatomic) MainWindowController *mainWindowController;
 
 @end

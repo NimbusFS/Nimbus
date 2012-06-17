@@ -12,13 +12,13 @@
     NimbusFUSEFileSystem *nimbusFS;
 }
 
-@property (assign) IBOutlet NSButton *mountButton;
-@property (assign) IBOutlet NSTextField *usernameField;
-@property (assign) IBOutlet NSSecureTextField *passwordField;
-@property (assign) IBOutlet NSTextField *mountPathField;
-@property (assign) IBOutlet NSTextField *loginFailedLabel;
-@property (assign) IBOutlet NSProgressIndicator *loginProgressIndicator;
-@property (assign) IBOutlet NSTextField *descriptionLabel;
+@property (retain,nonatomic) IBOutlet NSButton *mountButton;
+@property (retain,nonatomic) IBOutlet NSTextField *usernameField;
+@property (retain,nonatomic) IBOutlet NSSecureTextField *passwordField;
+@property (retain,nonatomic) IBOutlet NSTextField *loginFailedLabel;
+@property (retain,nonatomic) IBOutlet NSProgressIndicator *loginProgressIndicator;
+
+@property (retain,nonatomic) IBOutlet NSTextView *creditsField;
 
 - (IBAction)mount:(id)sender;
 

@@ -10,23 +10,36 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window;
+@synthesize mainWindowController = _mainWindowController;
 
 - (void)dealloc
 {
     [super dealloc];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)showWindow
 {
-    
+    [self.mainWindowController showWindow:self];
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.mainWindowController.window makeKeyAndOrderFront:self];
 }
 
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    //[NSApplication.sharedApplication setActivationPolicy:NSApplicationActivationPolicyAccessory];
+    self.mainWindowController = [[MainWindowController alloc] initWithWindowNibName:@"MainWindow"];
+    [self showWindow];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    [self showWindow];
+}
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
     // Save changes in the application's managed object context before the application terminates.
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 //    if (nimbusFS != nil)
 //    {
@@ -34,13 +47,15 @@
 //        nimbusFS = nil;
 //    }
     
-    return NSTerminateNow;
+    //return NSTerminateNow;
+    NSLog(@"Appl should terminate?");
+    return NSTerminateCancel;
 }
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication*)theApplication hasVisibleWindows:(BOOL)flag
-{
-    [_window makeKeyAndOrderFront:self];
-    return YES;
-}
+//- (BOOL)applicationShouldHandleReopen:(NSApplication*)theApplication hasVisibleWindows:(BOOL)flag
+//{
+//    [self.mainWindowController.window makeKeyAndOrderFront:self];
+//    return YES;
+//}
 
 @end

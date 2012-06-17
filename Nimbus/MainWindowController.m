@@ -17,10 +17,9 @@
 @synthesize mountButton = _mountButton;
 @synthesize usernameField = _usernameField;
 @synthesize passwordField = _passwordField;
-@synthesize mountPathField = _mountPathField;
-@synthesize descriptionLabel = _descriptionLabel;
 @synthesize loginFailedLabel = _loginFailedLabel;
 @synthesize loginProgressIndicator = _loginProgressIndicator;
+@synthesize creditsField = _creditsField;
 
 
 - (id)initWithWindow:(NSWindow *)window
@@ -36,14 +35,15 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    NSLog(@"%s", __FUNCTION__);
     
+    // Subscribe to FUSE events
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(didMount:)
                    name:kGMUserFileSystemDidMount object:nil];
     [center addObserver:self selector:@selector(didUnmount:)
                    name:kGMUserFileSystemDidUnmount object:nil];
     
+    // Try to pre-populate the login info
     NSArray* loginInfo = [MainWindowController getCloudAppInfoFromKeychain];
     NSString *username;
     NSString *password;
@@ -64,32 +64,13 @@
         [_passwordField setStringValue:password];
     }
     
-    [_mountPathField bind:@"value"
-                 toObject:[NSUserDefaultsController sharedUserDefaultsController]
-              withKeyPath:@"values.NimbusMountPath"
-                  options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
-                                                      forKey:@"NSContinuouslyUpdatesValue"]];    
-    
-    [_descriptionLabel setAllowsEditingTextAttributes: YES];
-    [_descriptionLabel setSelectable: YES];
-    
-    NSURL* url = [NSURL URLWithString:@"http://getcloudapp.com"];
-    
-    NSMutableAttributedString* string = [[NSMutableAttributedString alloc] initWithString:@"Get a CloudApp account at "];
-    [string appendAttributedString:[NSAttributedString hyperlinkFromString:@"www.getcloudapp.com" withURL:url]];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:@". Then sign in below."]];
-    
-    NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                [NSFont fontWithName:@"Lucida Grande" size:13], NSFontAttributeName,
-                                nil];
-    NSRange range = NSMakeRange(0, [string length]);
-    [string addAttributes:attributes range:range];
-    
-    [_descriptionLabel setAttributedStringValue:string];
+            
     [_loginFailedLabel setHidden:YES];
     [_loginProgressIndicator setHidden:YES];
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    // Credits list
+    NSString *creditsPath = [NSBundle.mainBundle pathForResource:@"Credits" ofType:@"rtf"];
+    [self.creditsField readRTFDFromFile:creditsPath];
 }
 
 +(NSArray *)getCloudAppInfoFromKeychain
@@ -145,19 +126,17 @@
     {
         [_usernameField setEnabled:NO];
         [_passwordField setEnabled:NO];
-        [_mountPathField setEnabled:NO];
         [_mountButton setEnabled:NO];
         [_loginProgressIndicator setHidden:NO];
         
         // mount the thing
-        nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:[_mountPathField stringValue]];
+        nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:@"/Volumes/Nimbus"];
         
         // mounting failed
         if (nimbusFS == nil)
         {
             [_usernameField setEnabled:YES];
             [_passwordField setEnabled:YES];
-            [_mountPathField setEnabled:YES];
             [_mountButton setEnabled:YES];
             [_loginFailedLabel setHidden:NO];
             [_loginProgressIndicator setHidden:YES];
@@ -168,7 +147,6 @@
             [_mountButton setTitle:@"Unmount"];
             [_usernameField setEnabled:NO];
             [_passwordField setEnabled:NO];
-            [_mountPathField setEnabled:NO];
             [_mountButton setEnabled:YES];
             [_loginFailedLabel setHidden:YES];
             [_loginProgressIndicator setHidden:YES];
@@ -204,7 +182,6 @@
     [_passwordField setEnabled:YES];
     [_mountButton setEnabled:YES];
     [_mountButton setTitle:@"Mount"];
-    [_mountPathField setEnabled:YES];
     [_loginFailedLabel setHidden:YES];
     [_loginProgressIndicator setHidden:YES];
 }

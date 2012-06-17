@@ -20,7 +20,7 @@
 		1B7F4B1F14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */; };
 		1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */; };
 		83160B5B15520AA2008195D1 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83160B5A155209A3008195D1 /* libCloud.a */; };
-		832EC3691588677B001F341A /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832EC3681588677B001F341A /* MainWindow.xib */; };
+		832EC3691588677B001F341A /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832EC3681588677B001F341A /* Menu.xib */; };
 		83E09E32158869D200A75EC1 /* MondoSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E2D158869D200A75EC1 /* MondoSwitch.m */; };
 		83E09E33158869D200A75EC1 /* MondoSwitchButtonCALayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E30158869D200A75EC1 /* MondoSwitchButtonCALayer.m */; };
 		83E09E36158869DA00A75EC1 /* PPCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E35158869DA00A75EC1 /* PPCommon.m */; };
@@ -28,6 +28,7 @@
 		83E09E3A15886A3200A75EC1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E09E3915886A3200A75EC1 /* Carbon.framework */; };
 		83E09E4115886A8100A75EC1 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E09E4015886A8100A75EC1 /* ExceptionHandling.framework */; };
 		83E09E4815886BC600A75EC1 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E4715886BC600A75EC1 /* MainWindowController.m */; };
+		83E09E58158D4D5200A75EC1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E09E57158D4D5200A75EC1 /* MainWindow.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +66,7 @@
 		1BC9A27314DFBA2B00A7B9FE /* NimbusFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NimbusFile.h; sourceTree = "<group>"; };
 		1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NimbusFile.m; sourceTree = "<group>"; };
 		83160B55155209A3008195D1 /* Cloud.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cloud.xcodeproj; path = "cloud-app-obj-c/Source/libCloud/Cloud.xcodeproj"; sourceTree = "<group>"; };
-		832EC3681588677B001F341A /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		832EC3681588677B001F341A /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		83E09E2C158869D200A75EC1 /* MondoSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondoSwitch.h; sourceTree = "<group>"; };
 		83E09E2D158869D200A75EC1 /* MondoSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MondoSwitch.m; sourceTree = "<group>"; };
 		83E09E2E158869D200A75EC1 /* MondoSwitch_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondoSwitch_Private.h; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 		83E09E4015886A8100A75EC1 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = System/Library/Frameworks/ExceptionHandling.framework; sourceTree = SDKROOT; };
 		83E09E4615886BC600A75EC1 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		83E09E4715886BC600A75EC1 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
+		83E09E57158D4D5200A75EC1 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +160,8 @@
 				1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */,
 				1B7F4B1D14DB6EB1002D1B93 /* NimbusFUSEFileSystem.h */,
 				1B7F4B1E14DB6EB1002D1B93 /* NimbusFUSEFileSystem.m */,
-				832EC3681588677B001F341A /* MainWindow.xib */,
+				832EC3681588677B001F341A /* Menu.xib */,
+				83E09E57158D4D5200A75EC1 /* MainWindow.xib */,
 				1B7F4B2414DB7083002D1B93 /* Resources */,
 				1B7F4AF114DB61A5002D1B93 /* Supporting Files */,
 			);
@@ -277,7 +280,8 @@
 				1B7F4AF514DB61A5002D1B93 /* InfoPlist.strings in Resources */,
 				1B7F4AFB14DB61A5002D1B93 /* Credits.rtf in Resources */,
 				1B42176E14F97E9300E95F2F /* Nimbus.icns in Resources */,
-				832EC3691588677B001F341A /* MainWindow.xib in Resources */,
+				832EC3691588677B001F341A /* Menu.xib in Resources */,
+				83E09E58158D4D5200A75EC1 /* MainWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

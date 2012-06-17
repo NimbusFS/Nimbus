@@ -12,6 +12,12 @@
     NimbusFUSEFileSystem *nimbusFS;
 }
 
+// Store two different images to switch between
+@property (retain,nonatomic) NSImage *hdDisabledImage;
+@property (retain,nonatomic) NSImage *hdEnabledImage;
+
+@property (retain,nonatomic) IBOutlet NSImageView *hdImage;
+
 @property (retain,nonatomic) IBOutlet NSButton *mountButton;
 @property (retain,nonatomic) IBOutlet NSTextField *usernameField;
 @property (retain,nonatomic) IBOutlet NSSecureTextField *passwordField;

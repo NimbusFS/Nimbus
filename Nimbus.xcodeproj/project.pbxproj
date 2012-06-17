@@ -21,14 +21,10 @@
 		1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */; };
 		83160B5B15520AA2008195D1 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83160B5A155209A3008195D1 /* libCloud.a */; };
 		832EC3691588677B001F341A /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832EC3681588677B001F341A /* Menu.xib */; };
-		83E09E32158869D200A75EC1 /* MondoSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E2D158869D200A75EC1 /* MondoSwitch.m */; };
-		83E09E33158869D200A75EC1 /* MondoSwitchButtonCALayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E30158869D200A75EC1 /* MondoSwitchButtonCALayer.m */; };
-		83E09E36158869DA00A75EC1 /* PPCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E35158869DA00A75EC1 /* PPCommon.m */; };
-		83E09E3815886A2900A75EC1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E09E3715886A2900A75EC1 /* QuartzCore.framework */; };
-		83E09E3A15886A3200A75EC1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E09E3915886A3200A75EC1 /* Carbon.framework */; };
-		83E09E4115886A8100A75EC1 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E09E4015886A8100A75EC1 /* ExceptionHandling.framework */; };
+		838FBFEB158D75DF00FEF93B /* NimbusIconDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 838FBFEA158D75DF00FEF93B /* NimbusIconDisabled.png */; };
 		83E09E4815886BC600A75EC1 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E09E4715886BC600A75EC1 /* MainWindowController.m */; };
 		83E09E58158D4D5200A75EC1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E09E57158D4D5200A75EC1 /* MainWindow.xib */; };
+		83E09E5E158D606B00A75EC1 /* CloudAppLogo.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 83E09E5D158D606B00A75EC1 /* CloudAppLogo.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,20 +63,12 @@
 		1BC9A27414DFBA2B00A7B9FE /* NimbusFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NimbusFile.m; sourceTree = "<group>"; };
 		83160B55155209A3008195D1 /* Cloud.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cloud.xcodeproj; path = "cloud-app-obj-c/Source/libCloud/Cloud.xcodeproj"; sourceTree = "<group>"; };
 		832EC3681588677B001F341A /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
-		83E09E2C158869D200A75EC1 /* MondoSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondoSwitch.h; sourceTree = "<group>"; };
-		83E09E2D158869D200A75EC1 /* MondoSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MondoSwitch.m; sourceTree = "<group>"; };
-		83E09E2E158869D200A75EC1 /* MondoSwitch_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondoSwitch_Private.h; sourceTree = "<group>"; };
-		83E09E2F158869D200A75EC1 /* MondoSwitchButtonCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondoSwitchButtonCALayer.h; sourceTree = "<group>"; };
-		83E09E30158869D200A75EC1 /* MondoSwitchButtonCALayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MondoSwitchButtonCALayer.m; sourceTree = "<group>"; };
-		83E09E31158869D200A75EC1 /* MondoSwitchButtonCALayer_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondoSwitchButtonCALayer_Private.h; sourceTree = "<group>"; };
-		83E09E34158869DA00A75EC1 /* PPCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCommon.h; sourceTree = "<group>"; };
-		83E09E35158869DA00A75EC1 /* PPCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCommon.m; sourceTree = "<group>"; };
-		83E09E3715886A2900A75EC1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		838FBFEA158D75DF00FEF93B /* NimbusIconDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NimbusIconDisabled.png; sourceTree = "<group>"; };
 		83E09E3915886A3200A75EC1 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		83E09E4015886A8100A75EC1 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = System/Library/Frameworks/ExceptionHandling.framework; sourceTree = SDKROOT; };
 		83E09E4615886BC600A75EC1 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		83E09E4715886BC600A75EC1 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		83E09E57158D4D5200A75EC1 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		83E09E5D158D606B00A75EC1 /* CloudAppLogo.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CloudAppLogo.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,9 +76,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83E09E4115886A8100A75EC1 /* ExceptionHandling.framework in Frameworks */,
-				83E09E3A15886A3200A75EC1 /* Carbon.framework in Frameworks */,
-				83E09E3815886A2900A75EC1 /* QuartzCore.framework in Frameworks */,
 				83160B5B15520AA2008195D1 /* libCloud.a in Frameworks */,
 				1B01DE751531647C0017B737 /* Security.framework in Frameworks */,
 				1B7F4B0B14DB61E8002D1B93 /* OSXFUSE.framework in Frameworks */,
@@ -135,10 +120,7 @@
 		1B7F4AE914DB61A5002D1B93 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				83E09E4015886A8100A75EC1 /* ExceptionHandling.framework */,
 				83E09E3915886A3200A75EC1 /* Carbon.framework */,
-				83E09E3715886A2900A75EC1 /* QuartzCore.framework */,
-				83E09E2B158869D200A75EC1 /* mondoSwitch */,
 				1B01DE741531647C0017B737 /* Security.framework */,
 				1B7F4AED14DB61A5002D1B93 /* AppKit.framework */,
 				1B7F4AEE14DB61A5002D1B93 /* CoreData.framework */,
@@ -183,6 +165,8 @@
 		1B7F4B2414DB7083002D1B93 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				838FBFEA158D75DF00FEF93B /* NimbusIconDisabled.png */,
+				83E09E5D158D606B00A75EC1 /* CloudAppLogo.pdf */,
 				1B42176D14F97E9300E95F2F /* Nimbus.icns */,
 			);
 			name = Resources;
@@ -194,21 +178,6 @@
 				83160B5A155209A3008195D1 /* libCloud.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		83E09E2B158869D200A75EC1 /* mondoSwitch */ = {
-			isa = PBXGroup;
-			children = (
-				83E09E34158869DA00A75EC1 /* PPCommon.h */,
-				83E09E35158869DA00A75EC1 /* PPCommon.m */,
-				83E09E2C158869D200A75EC1 /* MondoSwitch.h */,
-				83E09E2D158869D200A75EC1 /* MondoSwitch.m */,
-				83E09E2E158869D200A75EC1 /* MondoSwitch_Private.h */,
-				83E09E2F158869D200A75EC1 /* MondoSwitchButtonCALayer.h */,
-				83E09E30158869D200A75EC1 /* MondoSwitchButtonCALayer.m */,
-				83E09E31158869D200A75EC1 /* MondoSwitchButtonCALayer_Private.h */,
-			);
-			path = mondoSwitch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +251,8 @@
 				1B42176E14F97E9300E95F2F /* Nimbus.icns in Resources */,
 				832EC3691588677B001F341A /* Menu.xib in Resources */,
 				83E09E58158D4D5200A75EC1 /* MainWindow.xib in Resources */,
+				83E09E5E158D606B00A75EC1 /* CloudAppLogo.pdf in Resources */,
+				838FBFEB158D75DF00FEF93B /* NimbusIconDisabled.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,9 +269,6 @@
 				1BC9A27514DFBA2B00A7B9FE /* NimbusFile.m in Sources */,
 				1B24960F14EB9B49007F8166 /* NSError+POSIX.m in Sources */,
 				1B01DE78153165630017B737 /* NSAttributedString+Hyperlink.m in Sources */,
-				83E09E32158869D200A75EC1 /* MondoSwitch.m in Sources */,
-				83E09E33158869D200A75EC1 /* MondoSwitchButtonCALayer.m in Sources */,
-				83E09E36158869DA00A75EC1 /* PPCommon.m in Sources */,
 				83E09E4815886BC600A75EC1 /* MainWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,11 +16,14 @@
 @synthesize isCachedToDisk;
 @synthesize isCachedInMemory;
 @synthesize data;
+
 - (NSFileHandle*) fileHandle
 {
-    if (itsFileHandle == nil) {
+    if (itsFileHandle == nil)
+    {
         itsFileHandle = [NSFileHandle fileHandleForWritingAtPath:itsDiskPath];
-        if(itsFileHandle == nil) {
+        if(itsFileHandle == nil)
+        {
             // Then the file must not exist yet
             [[NSFileManager defaultManager] createFileAtPath:itsDiskPath contents:nil attributes:nil];
             currentOffset = 0ULL;

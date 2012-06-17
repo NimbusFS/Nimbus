@@ -290,7 +290,6 @@
         
         if ([file isCachedToDisk]) {
             [[file attributes] addEntriesFromDictionary:attributes];
-            NSLog(@"Set attributes: %@" , attributes);
             return YES;
         } else {
             NSLog(@"File wasn't cached!");
@@ -368,7 +367,31 @@
  */
 - (void)releaseFileAtPath:(NSString *)path userData:(id)userData
 {
-    NSLog(@"releasefileatpath %@", path);
+    // cool, safely assume this file is done being modified and upload it to the cloud
+    NSLog(@"ReleaseFileAtPath %@", path);
+    
+    if ( [[path lastPathComponent] hasPrefix:@"._"] )
+    {
+        NSLog(@"Skipping resource fork");
+        return;
+    }
+    
+    // Find the nimbus file
+    NimbusFile *nf = [cloudFiles objectForKey:[path lastPathComponent]];
+    if (nf == nil)
+    {
+        NSLog(@"Tried to close() a file that doesn't exist in the Nimbus cache. How did this happen??");
+        return;
+    }
+    
+    NSData *data;
+    if ( [nf isCachedInMemory] )
+        data = [nf data];
+    else
+        data = [[NSData alloc] initWithContentsOfFile:[nf itsDiskPath]];
+
+    // upload it to CloudApp 
+    [engine_ uploadFileWithName:[nf.itsCLWebItem name] fileData:data userInfo:nil];
 }
 
 /*!
@@ -435,7 +458,7 @@
     [file writeData:data];
     [data release];
     
-    return size;
+    return (int)size;
 }
 
 /*!
@@ -490,13 +513,16 @@
               attributes:(NSDictionary *)attributes
                 userData:(id *)userData 
                    error:(NSError **)error
-{    
-    if ([path isEqualToString:@"/.DS_Store"]) {
+{
+    if ([path isEqualToString:@"/.DS_Store"])
+    {
         return NO;
     }
+    
     NSLog(@"Adding file %@", path);
     
-    if ([cloudFiles objectForKey:[path lastPathComponent]]) {
+    if ([cloudFiles objectForKey:[path lastPathComponent]])
+    {
         // File exists!
         *error = [[NSError alloc] initWithDomain:NSPOSIXErrorDomain 
                                             code:EEXIST 
@@ -508,7 +534,7 @@
                                          andCachePath:cachePath];    
     [cloudFiles setObject:nf forKey:[nf.itsCLWebItem name]];
     
-    NSLog(@"%@", @"File created");
+    NSLog(@"%@", @"File created locally.");
     return YES;
 }
 
@@ -573,7 +599,7 @@
  */
 - (BOOL)removeDirectoryAtPath:(NSString *)path error:(NSError **)error
 {
-    NSLog(@"Removedirectoratpath");
+    NSLog(@"RemoveDirectoryAtPath");
 }
 
 /*!
@@ -588,7 +614,7 @@
  */
 - (BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error
 {
-    return YES;
+    // is this @synchronized necessary?
     @synchronized(self)
     {
         NSLog(@"Removing...");
@@ -608,8 +634,6 @@
     }
 }
 
-
-
 #pragma mark- CLAPI callbacks
 - (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
 {
@@ -625,6 +649,16 @@
 {
     // neato
     NSLog(@"Deletion succeeded.");
+}
+
+-(void) fileUploadDidProgress:(CGFloat)percentageComplete connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
+{
+    NSLog(@"Upload %f%%", percentageComplete*100);
+}
+
+-(void) fileUploadDidSucceedWithResultingItem:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo
+{
+    NSLog(@"Hey upload complete!");
 }
 
 - (void)itemListRetrievalSucceeded:(NSArray *)items connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo

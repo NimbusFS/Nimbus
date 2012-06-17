@@ -8,8 +8,9 @@
 #import <Cocoa/Cocoa.h>
 #import "NimbusFUSEFileSystem.h"
 
-@interface MainWindowController : NSWindowController {
+@interface MainWindowController : NSWindowController <NSWindowDelegate> {
     NimbusFUSEFileSystem *nimbusFS;
+    BOOL isMounted;
 }
 
 // Store two different images to switch between

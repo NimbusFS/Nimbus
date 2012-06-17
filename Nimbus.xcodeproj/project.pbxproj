@@ -346,6 +346,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nimbus/Nimbus-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
 				INFOPLIST_FILE = "Nimbus/Nimbus-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -354,7 +355,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "${BUILT_PRODUCTS_DIR}/**";
+				USER_HEADER_SEARCH_PATHS = "\"${BUILT_PRODUCTS_DIR}\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -365,6 +366,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nimbus/Nimbus-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
 				INFOPLIST_FILE = "Nimbus/Nimbus-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

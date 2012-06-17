@@ -25,6 +25,7 @@
 @synthesize loginProgressIndicator = _loginProgressIndicator;
 @synthesize creditsField = _creditsField;
 
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
@@ -35,6 +36,8 @@
         
         NSString *hdEnabledImageFile = [NSBundle.mainBundle pathForResource:@"Nimbus" ofType:@"icns"];
         self.hdEnabledImage = [[NSImage alloc] initWithContentsOfFile:hdEnabledImageFile];
+        
+        isMounted = NO;
     }
     
     return self;
@@ -178,6 +181,7 @@
 }
 
 - (void)didMount:(NSNotification *)notification {
+    isMounted = YES;
     // Change the image
     [self.hdImage setImage:self.hdEnabledImage];
     NSDictionary* userInfo = [notification userInfo];
@@ -188,6 +192,7 @@
 }
 
 - (void)didUnmount:(NSNotification*)notification {
+    isMounted = NO;
     [self.hdImage setImage:self.hdDisabledImage];
     [_usernameField setEnabled:YES];
     [_passwordField setEnabled:YES];
@@ -195,6 +200,15 @@
     [_mountButton setTitle:@"Mount"];
     [_loginFailedLabel setHidden:YES];
     [_loginProgressIndicator setHidden:YES];
+}
+
+#pragma mark window delegate
+// Close if we aren't mounted
+- (void)windowWillClose:(NSNotification *)notification 
+{
+    if(!isMounted){
+        [NSApp terminate:self];
+    }
 }
 
 @end

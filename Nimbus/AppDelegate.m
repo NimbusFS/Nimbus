@@ -36,21 +36,11 @@
     [self showWindow];
 }
 
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-
-    // Save changes in the application's managed object context before the application terminates.
-    // [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-//    if (nimbusFS != nil)
-//    {
-//        [nimbusFS unmount];
-//        nimbusFS = nil;
-//    }
-    
-    //return NSTerminateNow;
-    NSLog(@"Appl should terminate?");
-    return NSTerminateCancel;
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender 
+{
+    return NSTerminateNow;
 }
+
 
 //- (BOOL)applicationShouldHandleReopen:(NSApplication*)theApplication hasVisibleWindows:(BOOL)flag
 //{

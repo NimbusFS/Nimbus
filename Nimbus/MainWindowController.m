@@ -141,7 +141,7 @@
         [_loginProgressIndicator setHidden:NO];
         
         // mount the thing
-        nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:@"/Volumes/Nimbus"];
+        nimbusFS = [[NimbusFUSEFileSystem alloc] initWithUsername:[_usernameField stringValue] andPassword:[_passwordField stringValue] atMountPath:[[NSString alloc] initWithFormat:@"/Volumes/Nimbus %@", [_usernameField stringValue]]];
         
         // mounting failed
         if (nimbusFS == nil)

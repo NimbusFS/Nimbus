@@ -48,7 +48,7 @@
         fs_ = [[GMUserFileSystem alloc] initWithDelegate:self isThreadSafe:YES];
         
         NSMutableArray* options = [NSMutableArray array];
-        [options addObject:@"volname=NimbusFS"];
+        [options addObject:[NSString stringWithFormat:@"volname=Nimbus %@", username]];
         [options addObject:[NSString stringWithFormat:@"volicon=%@", [[NSBundle mainBundle] pathForResource:@"Nimbus" ofType:@"icns"]]];
         [fs_ mountAtPath:mountPath withOptions:options];
 
@@ -115,6 +115,7 @@
     [fs_ unmount];  // Just in case we need to unmount;
     [[fs_ delegate] release];  // Clean up HelloFS
     [fs_ release];
+    [super dealloc];
 }
 
 #pragma mark- Overridden GMUserFileSystem delegate methods-

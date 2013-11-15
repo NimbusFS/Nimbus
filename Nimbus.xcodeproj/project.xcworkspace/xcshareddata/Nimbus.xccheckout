@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>67217419-5113-439B-B3B4-7D995EA1E7B6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Nimbus</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>A983B9D7-680B-4ED2-AC42-D985C69E25A1</key>
+		<string>git://github.com/cloudapp/objective-c.git</string>
+		<key>E1BB4463-069C-47D5-80B4-FD35373D6D8E</key>
+		<string>ssh://github.com/NimbusFS/Nimbus.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Nimbus.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>A983B9D7-680B-4ED2-AC42-D985C69E25A1</key>
+		<string>../../../Third Party/cloud-app-obj-c</string>
+		<key>E1BB4463-069C-47D5-80B4-FD35373D6D8E</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/NimbusFS/Nimbus.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E1BB4463-069C-47D5-80B4-FD35373D6D8E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A983B9D7-680B-4ED2-AC42-D985C69E25A1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cloud-app-obj-c</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E1BB4463-069C-47D5-80B4-FD35373D6D8E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Nimbus</string>
+		</dict>
+	</array>
+</dict>
+</plist>

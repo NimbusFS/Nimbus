@@ -61,6 +61,7 @@
     
     if (loginInfo == nil)
     {
+        // Populate the username field from whatever it was last time (stored in a dict on disk)
         [_usernameField bind:@"value"
                     toObject:[NSUserDefaultsController sharedUserDefaultsController]
                  withKeyPath:@"values.NimbusUserName"
@@ -135,8 +136,6 @@
     // we haven't yet mounted Nimbus
     if (nimbusFS == nil && [[_mountButton title] isEqualToString:@"Mount"])
     {
-        [_usernameField setEnabled:NO];
-        [_passwordField setEnabled:NO];
         [_mountButton setEnabled:NO];
         [_loginProgressIndicator setHidden:NO];
         

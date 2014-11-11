@@ -10,33 +10,41 @@
 	<string>Nimbus</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>A983B9D7-680B-4ED2-AC42-D985C69E25A1</key>
+		<key>550868AA66482B7449323054D2FE2D72F2ED45EB</key>
+		<string>github.com:NimbusFS/Nimbus.git</string>
+		<key>73F690BE1B6D95EB211CEAFEF8F4E7FC8A1A292F</key>
+		<string>github.com:cloudapp/IFUnicodeURL.git</string>
+		<key>AA3724F8AD565DB2089C5757B6B76FDB09E52E51</key>
+		<string>https://github.com/stig/json-framework.git</string>
+		<key>D5EDC498415C49159E843B9176AFC0EB36C70FEB</key>
 		<string>git://github.com/cloudapp/objective-c.git</string>
-		<key>E1BB4463-069C-47D5-80B4-FD35373D6D8E</key>
-		<string>ssh://github.com/NimbusFS/Nimbus.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Nimbus.xcodeproj/project.xcworkspace</string>
+	<string>Nimbus.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>A983B9D7-680B-4ED2-AC42-D985C69E25A1</key>
-		<string>../../../Third Party/cloud-app-obj-c</string>
-		<key>E1BB4463-069C-47D5-80B4-FD35373D6D8E</key>
+		<key>550868AA66482B7449323054D2FE2D72F2ED45EB</key>
 		<string>../..</string>
+		<key>73F690BE1B6D95EB211CEAFEF8F4E7FC8A1A292F</key>
+		<string>../../../Third%20Party/cloud-app-obj-c/Source/libCloud/Cloud/Third%20Party/IFUnicodeURL</string>
+		<key>AA3724F8AD565DB2089C5757B6B76FDB09E52E51</key>
+		<string>../../../Third%20Party/cloud-app-obj-c/Source/libCloud/Cloud/Third%20Party/JSON</string>
+		<key>D5EDC498415C49159E843B9176AFC0EB36C70FEB</key>
+		<string>../../../Third%20Party/cloud-app-obj-c</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/NimbusFS/Nimbus.git</string>
+	<string>github.com:NimbusFS/Nimbus.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E1BB4463-069C-47D5-80B4-FD35373D6D8E</string>
+	<string>550868AA66482B7449323054D2FE2D72F2ED45EB</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>A983B9D7-680B-4ED2-AC42-D985C69E25A1</string>
+			<string>D5EDC498415C49159E843B9176AFC0EB36C70FEB</string>
 			<key>IDESourceControlWCCName</key>
 			<string>cloud-app-obj-c</string>
 		</dict>
@@ -44,7 +52,23 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E1BB4463-069C-47D5-80B4-FD35373D6D8E</string>
+			<string>73F690BE1B6D95EB211CEAFEF8F4E7FC8A1A292F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>IFUnicodeURL</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AA3724F8AD565DB2089C5757B6B76FDB09E52E51</string>
+			<key>IDESourceControlWCCName</key>
+			<string>JSON</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>550868AA66482B7449323054D2FE2D72F2ED45EB</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Nimbus</string>
 		</dict>

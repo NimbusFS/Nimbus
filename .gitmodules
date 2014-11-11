@@ -1,0 +1,3 @@
+[submodule "cloud-api"]
+	path = cloud-api
+	url = git@github.com:NimbusFS/objective-c.git

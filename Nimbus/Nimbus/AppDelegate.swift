@@ -7,51 +7,33 @@
 //
 import Cocoa
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, CLAPIEngineDelegate 
+class CloudApp: NSObject, CLAPIEngineDelegate
 {
-  // Mark this as "optional" so that we can
-  // avoid initializing it in init()
-  var m_engine: CLAPIEngine?
-  var m_is_logged_on = false
+  var m_engine: CLAPIEngine
+  var m_is_logged_in = false
   var m_login_failed = false
 
-  func applicationDidFinishLaunching(aNotification: NSNotification) 
+  func login(username: NSString, password: NSString) -> Bool
   {
-    // Insert code here to initialize your application
-    m_engine = CLAPIEngine(delegate: self)
+    // Log into CloudApp. Return true if success, false on failure
+    m_engine               = CLAPIEngine(delegate: self)
+    m_engine.email         = username
+    m_engine.password      = password
+    m_engine.clearsCookies = true
 
-    // "unwrap" the optional var with !
-    m_engine!.email         = ""
-    m_engine!.password      = ""
-    m_engine!.clearsCookies = true
+    // try to get user info from CloudApp (this is an asynchronous call)
+    m_engine.getAccountInformationWithUserInfo(nil)
 
-    if (self.login())
-    {
-      m_engine!.getItemListStartingAtPage(1, itemsPerPage: 10, userInfo: nil)
-    }
-  }
-
-  func applicationWillTerminate(aNotification: NSNotification)
-  {
-    // Insert code here to tear down your application
-  }
-
-  func login() -> Bool
-  {
-    // try to get the user info (this is asynchronous)
-    m_engine!.getAccountInformationWithUserInfo(nil)
-
-    // create a timer to wait a max amount of time
-    var timeoutDate: NSDate = NSDate(timeIntervalSinceNow: 15.0)
-
-    // wait until it succeeds
+    // wait at most 5 seconds for a login to succeed or fail
+    var timeoutDate: NSDate = NSDate(timeIntervalSinceNow: 5.0)
     while (!m_is_logged_on && timeoutDate.timeIntervalSinceNow > 0)
     {
+      // Sleep for 0.5s
       var stopDate = NSDate(timeIntervalSinceNow: 0.5)
-      var runLoop = NSRunLoop.currentRunLoop()
+      var runLoop  = NSRunLoop.currentRunLoop()
       runLoop.runUntilDate(stopDate)
 
+      // check if login succeeded
       if (m_login_failed)
       {
         m_is_logged_on = false
@@ -59,30 +41,53 @@ class AppDelegate: NSObject, NSApplicationDelegate, CLAPIEngineDelegate
       }
     }
 
-    return m_is_logged_on
+    return true;
   }
 
+  // CLAPI callbacks below
+
+  // Successfully got account info from CloudApp (ie. login succeeded)
   func accountInformationRetrievalSucceeded(account: CLAccount, connectionIdentifier: NSString, userInfo: AnyObject)
   {
     m_is_logged_on = true
+    m_login_failed = false
   }
 
+  // HTTP request failed
   func requestDidFailWithError(error: NSError, connectionIdentifier: NSString, userInfo: AnyObject)
   {
-    NSLog("Failure: %@, %@", connectionIdentifier, error)
-
-    if (!m_is_logged_on)
+    if m_is_logged_on
+    {
+      // a non-login related request failed
+    }
+    else
     {
       m_login_failed = true
     }
   }
 
+  // Successfully retrieved a list of files from CloudApp
   func itemListRetrievalSucceeded(items: NSArray, connectionIdentifier: NSString, userInfo: AnyObject)
   {
     for item in items
     {
-      NSLog("%@", item.name)
+      NSLog(item.name)
     }
   }
 }
 
+@NSApplicationMain
+class AppDelegate: NSObject, NSApplicationDelegate, CLAPIEngineDelegate 
+{
+  func applicationDidFinishLaunching(aNotification: NSNotification) 
+  {
+    // Insert code here to initialize your application
+    var cloudApp: CloudApp
+    cloudApp.login()
+  }
+
+  func applicationWillTerminate(aNotification: NSNotification)
+  {
+    // Insert code here to tear down your application
+  }
+}

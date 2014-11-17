@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B11E5651A17F4A000970970 /* CloudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B11E5641A17F4A000970970 /* CloudApp.swift */; };
+		1B11E5861A18A2EE00970970 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B11E5841A17F7CF00970970 /* main.swift */; };
 		1B6D3B9F1A11E56600BF2752 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B6D3B9C1A11E51300BF2752 /* libCloud.a */; };
+		1BA1B8A71A19702800043881 /* CloudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B11E5641A17F4A000970970 /* CloudApp.swift */; };
+		1BA1B8A81A19702F00043881 /* libCloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B6D3B9C1A11E51300BF2752 /* libCloud.a */; };
 		1BDF9E881A11C41200E15C57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDF9E871A11C41200E15C57 /* AppDelegate.swift */; };
 		1BDF9E8A1A11C41200E15C57 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDF9E891A11C41200E15C57 /* ViewController.swift */; };
 		1BDF9E8C1A11C41200E15C57 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF9E8B1A11C41200E15C57 /* Images.xcassets */; };
@@ -30,6 +34,13 @@
 			remoteGlobalIDString = 4B1AB183130B69B900BD6A95;
 			remoteInfo = Cloud;
 		};
+		1BA1B8A51A19702100043881 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B6D3B971A11E51300BF2752 /* Cloud.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B1AB183130B69B900BD6A95;
+			remoteInfo = Cloud;
+		};
 		1BDF9E951A11C41200E15C57 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1BDF9E7A1A11C41200E15C57 /* Project object */;
@@ -39,9 +50,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1B11E5681A17F76600970970 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1B11E5641A17F4A000970970 /* CloudApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudApp.swift; sourceTree = "<group>"; };
+		1B11E56A1A17F76600970970 /* nimbus-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nimbus-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B11E5841A17F7CF00970970 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		1B2FA90B1A11D0C20049AE09 /* Cloud-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Cloud-Bridging-Header.h"; path = "../Cloud-Bridging-Header.h"; sourceTree = "<group>"; };
 		1B6D3B971A11E51300BF2752 /* Cloud.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cloud.xcodeproj; path = "../cloud-api/Source/libCloud/Cloud.xcodeproj"; sourceTree = "<group>"; };
+		1BA1B8B91A19704B00043881 /* Nimbus copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Nimbus copy-Info.plist"; path = "/Users/sagar/workspace/Nimbus/Nimbus/Nimbus copy-Info.plist"; sourceTree = "<absolute>"; };
 		1BDF9E821A11C41200E15C57 /* Nimbus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nimbus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BDF9E861A11C41200E15C57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BDF9E871A11C41200E15C57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +81,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1B11E5671A17F76600970970 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BA1B8A81A19702F00043881 /* libCloud.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1BDF9E7F1A11C41200E15C57 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -87,6 +122,7 @@
 				1BDF9E841A11C41200E15C57 /* Nimbus */,
 				1BDF9E971A11C41200E15C57 /* NimbusTests */,
 				1BDF9E831A11C41200E15C57 /* Products */,
+				1BA1B8B91A19704B00043881 /* Nimbus copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,6 +131,7 @@
 			children = (
 				1BDF9E821A11C41200E15C57 /* Nimbus.app */,
 				1BDF9E941A11C41200E15C57 /* NimbusTests.xctest */,
+				1B11E56A1A17F76600970970 /* nimbus-cli */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,8 +139,10 @@
 		1BDF9E841A11C41200E15C57 /* Nimbus */ = {
 			isa = PBXGroup;
 			children = (
+				1B11E5641A17F4A000970970 /* CloudApp.swift */,
 				1B2FA90B1A11D0C20049AE09 /* Cloud-Bridging-Header.h */,
 				1BDF9E871A11C41200E15C57 /* AppDelegate.swift */,
+				1B11E5841A17F7CF00970970 /* main.swift */,
 				1BDF9E891A11C41200E15C57 /* ViewController.swift */,
 				1BDF9E8B1A11C41200E15C57 /* Images.xcassets */,
 				1BDF9E8D1A11C41200E15C57 /* Main.storyboard */,
@@ -140,6 +179,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1B11E5691A17F76600970970 /* nimbus-cli */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B11E56E1A17F76600970970 /* Build configuration list for PBXNativeTarget "nimbus-cli" */;
+			buildPhases = (
+				1B11E5661A17F76600970970 /* Sources */,
+				1B11E5671A17F76600970970 /* Frameworks */,
+				1B11E5681A17F76600970970 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1BA1B8A61A19702100043881 /* PBXTargetDependency */,
+			);
+			name = "nimbus-cli";
+			productName = "nimbus-cli";
+			productReference = 1B11E56A1A17F76600970970 /* nimbus-cli */;
+			productType = "com.apple.product-type.tool";
+		};
 		1BDF9E811A11C41200E15C57 /* Nimbus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1BDF9E9E1A11C41200E15C57 /* Build configuration list for PBXNativeTarget "Nimbus" */;
@@ -185,6 +242,9 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Sagar Pandya";
 				TargetAttributes = {
+					1B11E5691A17F76600970970 = {
+						CreatedOnToolsVersion = 6.1;
+					};
 					1BDF9E811A11C41200E15C57 = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -215,6 +275,7 @@
 			targets = (
 				1BDF9E811A11C41200E15C57 /* Nimbus */,
 				1BDF9E931A11C41200E15C57 /* NimbusTests */,
+				1B11E5691A17F76600970970 /* nimbus-cli */,
 			);
 		};
 /* End PBXProject section */
@@ -249,12 +310,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1B11E5661A17F76600970970 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BA1B8A71A19702800043881 /* CloudApp.swift in Sources */,
+				1B11E5861A18A2EE00970970 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1BDF9E7E1A11C41200E15C57 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				1BDF9E8A1A11C41200E15C57 /* ViewController.swift in Sources */,
 				1BDF9E881A11C41200E15C57 /* AppDelegate.swift in Sources */,
+				1B11E5651A17F4A000970970 /* CloudApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +344,11 @@
 			isa = PBXTargetDependency;
 			name = Cloud;
 			targetProxy = 1B6D3B9D1A11E54400BF2752 /* PBXContainerItemProxy */;
+		};
+		1BA1B8A61A19702100043881 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Cloud;
+			targetProxy = 1BA1B8A51A19702100043881 /* PBXContainerItemProxy */;
 		};
 		1BDF9E961A11C41200E15C57 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -293,6 +369,40 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1B11E56F1A17F76600970970 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Cloud-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "../cloud-api/Source/libCloud/Cloud/**";
+			};
+			name = Debug;
+		};
+		1B11E5701A17F76600970970 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Cloud-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "../cloud-api/Source/libCloud/Cloud/**";
+			};
+			name = Release;
+		};
 		1BDF9E9C1A11C41200E15C57 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -445,6 +555,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1B11E56E1A17F76600970970 /* Build configuration list for PBXNativeTarget "nimbus-cli" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B11E56F1A17F76600970970 /* Debug */,
+				1B11E5701A17F76600970970 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1BDF9E7D1A11C41200E15C57 /* Build configuration list for PBXProject "Nimbus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
